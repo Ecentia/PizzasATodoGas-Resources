@@ -1,11 +1,263 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Header from '../components/Header.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Pizzas a todo Gas | El Saucejo">
+  <Header />
+  
+  <main class="hero-section">
+    <div class="decor-bg">
+      <svg class="doodle doodle-garlic" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="var(--color-stone-grey)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 5 0 8-5 8-4 0-5-5-5-5s0 8 5 11c3 1.8 7 1.8 10 0 5-3 5-11 5-11s-1 5-5 5c-5 0-5-3-5-8z"></path></svg>
+      <svg class="doodle doodle-lemon" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--color-stone-grey)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 16.3c-1-2.4-4-5.2-6.3-5.2s-2.7-3.1-2.7-3.1S9.3 9.8 9.3 12c0 2.2 2.6 4.6 4.6 5.6 2 .9 5.3.6 6.3-1.3z"></path><path d="M4 19.5c2 1 4.5.5 6-1"></path></svg>
+      <svg class="doodle doodle-pepper" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="var(--color-stone-grey)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 2.5c0 0-4.5.5-6.4 5.4-2.1 5.3 1 10.1 5.4 12.1 4.4 2 8.6.6 10.7-4.7 1.9-4.8-.4-10-4.3-12.8"></path><path d="M13.5 2.5c0 0 1.5 3.5 4 4.5"></path></svg>
+    </div>
+
+    <div class="container hero-container">
+      
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="line-1">SABOR</span>
+          <span class="line-2">ARTESANO</span>
+          <span class="line-3">A TODO GAS</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          Tu pizzería de confianza en <strong>El Saucejo</strong>. Ingredientes frescos, masa madre y el sabor auténtico de siempre.
+        </p>
+
+        <div class="hero-cta-wrapper">
+          <a href="#carta" class="btn-primary">
+            VER LA CARTA
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <span class="price-tag-replacement">
+            <span class="tag-icon">📍</span> C/ Tu dirección aquí
+          </span>
+        </div>
+
+        <div class="hero-pagination">
+          <span class="current">01</span>
+          <span class="divider"></span>
+          <span class="total">03</span>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="circle-bg"></div>
+        <img 
+          src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000&auto=format&fit=crop" 
+          alt="Pizza Super Delicious" 
+          class="pizza-img spin-slow"
+        />
+        <div class="floating-badge">
+          <span>100%<br>CASERO</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </Layout>
+
+<style>
+  /* CONFIGURACIÓN HERO */
+  .hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 80px; /* Espacio para el header absolute */
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* DECORACIÓN DE FONDO (DOODLES) */
+  .decor-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15; /* Muy sutil para que no moleste */
+  }
+
+  .doodle {
+    position: absolute;
+  }
+  .doodle-garlic { top: 20%; left: 5%; transform: rotate(-15deg); }
+  .doodle-lemon { bottom: 15%; left: 10%; transform: rotate(15deg); }
+  .doodle-pepper { top: 15%; right: 40%; transform: rotate(45deg); }
+
+  /* TEXTOS HERO */
+  .hero-content {
+    z-index: 10;
+    padding-right: 20px;
+  }
+
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(3.5rem, 6vw, 7rem); /* Responsive typography */
+    line-height: 0.9;
+    margin-bottom: 20px;
+  }
+
+  .line-1 {
+    color: var(--color-text-main);
+  }
+  
+  .line-2 {
+    /* Efecto transparente con borde (Outline text) */
+    color: transparent;
+    -webkit-text-stroke: 2px var(--color-text-main);
+  }
+
+  .line-3 {
+    color: var(--color-accent); /* Amarillo Pizza */
+    font-size: clamp(3.5rem, 6vw, 7.5rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-stone-grey);
+    max-width: 450px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .hero-subtitle strong {
+    color: var(--color-text-main);
+    font-weight: 500;
+  }
+
+  /* CTA AREA */
+  .hero-cta-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+
+  .price-tag-replacement {
+    font-family: var(--font-heading);
+    color: var(--color-text-main);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* PAGINACIÓN */
+  .hero-pagination {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .current { color: var(--color-accent); }
+  .total { color: var(--color-stone-grey); }
+
+  /* IMAGEN HERO */
+  .hero-image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .circle-bg {
+    position: absolute;
+    width: 80%;
+    padding-bottom: 80%; /* Aspect ratio 1:1 */
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,193,7,0.1) 0%, rgba(0,0,0,0) 70%);
+    z-index: 1;
+  }
+
+  .pizza-img {
+    width: 90%;
+    max-width: 650px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    /* Sombra profunda para dar volumen sobre el negro */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  }
+
+  /* Badge flotante */
+  .floating-badge {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    background-color: var(--color-bg-light);
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.1;
+    z-index: 3;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 968px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+      padding-top: 40px;
+    }
+
+    .hero-content {
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta-wrapper {
+      justify-content: center;
+    }
+
+    .pizza-img {
+      width: 70%;
+    }
+    
+    .doodle-pepper { display: none; } /* Limpiar visualmente en móvil */
+  }
+</style>
