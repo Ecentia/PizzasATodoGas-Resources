@@ -1,7 +1,6 @@
 /* src/styles/global.css */
 :root {
   --color-bg: #0a0a0a;
-  --color-bg-light: #1a1a1a;
   --color-text-main: #ffffff;
   --color-stone-grey: #d8d4cf; 
   --color-accent: #ffc107; 
@@ -19,11 +18,12 @@
 
 body {
   background-color: var(--color-bg);
+  /* Degradado sutil para dar profundidad */
   background-image: radial-gradient(circle at 20% 50%, #252525 0%, var(--color-bg) 60%);
   color: var(--color-text-main);
   font-family: var(--font-body);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: hidden; /* IMPORTANTE: Para que la pizza gigante no cree barra de scroll lateral */
 }
 
 h1, h2, h3, h4, h5, h6 {
