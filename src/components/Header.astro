@@ -5,7 +5,9 @@
 <header class="site-header">
   <div class="container header-container">
     <a href="/" class="brand-logo">
-      <img src="/favicon.ico" alt="Icono Moto Pizza" class="logo-icon" width="40" height="40" />
+      <div class="bg-icon">
+          <img src="/favicon.ico" alt="Icono Moto Pizza" class="logo-icon" width="32" height="32" />
+      </div>
       <span class="brand-text">PIZZAS A TODO GAS</span>
     </a>
 
@@ -13,7 +15,8 @@
       <ul>
         <li><a href="/" class="active">Inicio</a></li>
         <li><a href="#carta">Nuestra Carta</a></li>
-        <li><a href="#local">El Local</a></li> <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#local">El Local</a></li>
+        <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
 
@@ -37,136 +40,42 @@
 </header>
 
 <style>
-  .site-header {
-    position: absolute; /* Flota sobre el Hero */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    padding: 25px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Línea muy sutil */
-  }
-
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  /* BRAND */
-  .brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-  }
-
-  .logo-icon {
-    /* Filtro para asegurar que el icono se vea bien sobre negro si fuera negro, 
-       pero al ser un favicon original suele ser colorido. 
-       Si tu favicon es negro, descomenta la siguiente línea: */
-    /* filter: invert(1); */
+  .site-header { position: absolute; top: 0; left: 0; width: 100%; z-index: 100; padding: 25px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+  .header-container { display: flex; justify-content: space-between; align-items: center; }
+  
+  .brand-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  
+  /* Nuevo estilo para mejorar visualización del icono */
+  .bg-icon {
+    background-color: white;
+    border-radius: 50%;
+    width: 40px;
     height: 40px;
-    width: auto;
-  }
-
-  .brand-text {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-text-main);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* NAV */
-  .main-nav ul {
-    display: flex;
-    gap: 40px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .main-nav a {
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text-main);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-  }
-
-  .main-nav a:hover, .main-nav a.active {
-    color: var(--color-accent);
-  }
-
-  /* Indicador visual de hover como en la referencia (flechita o punto) */
-  .main-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background-color: var(--color-accent);
-    transition: width 0.3s ease;
-  }
-
-  .main-nav a:hover::after {
-    width: 100%;
-  }
-
-  /* ACTIONS */
-  .header-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(255,193,7,0.3);
   }
+  
+  .logo-icon { width: 28px; height: 28px; object-fit: contain; }
 
-  .icon-btn {
-    background: none;
-    border: none;
-    color: var(--color-text-main);
-    cursor: pointer;
-    transition: color 0.3s ease;
-    display: flex;
-    align-items: center;
-  }
+  .brand-text { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--color-text-main); letter-spacing: 1px; text-transform: uppercase; }
 
-  .icon-btn:hover {
-    color: var(--color-accent);
-  }
+  .main-nav ul { display: flex; gap: 40px; margin: 0; padding: 0; }
+  .main-nav a { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 500; color: var(--color-text-main); text-transform: uppercase; letter-spacing: 1px; position: relative; }
+  .main-nav a:hover, .main-nav a.active { color: var(--color-accent); }
+  .main-nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background-color: var(--color-accent); transition: width 0.3s ease; }
+  .main-nav a:hover::after { width: 100%; }
 
-  .btn-header {
-    background-color: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: var(--color-text-main);
-    padding: 10px 20px;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-  }
+  .header-actions { display: flex; align-items: center; gap: 20px; }
+  .icon-btn { background: none; border: none; color: var(--color-text-main); cursor: pointer; transition: color 0.3s ease; display: flex; align-items: center; }
+  .icon-btn:hover { color: var(--color-accent); }
 
-  .btn-header:hover {
-    background-color: var(--color-accent);
-    border-color: var(--color-accent);
-    color: #000;
-  }
+  .btn-header { background-color: transparent; border: 2px solid rgba(255, 255, 255, 0.2); color: var(--color-text-main); padding: 10px 20px; font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
+  .btn-header:hover { background-color: var(--color-accent); border-color: var(--color-accent); color: #000; }
 
-  /* Ocultar menú en móvil para simplificar el ejemplo (responsive básico) */
   @media (max-width: 900px) {
-    .main-nav {
-      display: none; /* En producción usaríamos un menú hamburguesa */
-    }
-    .brand-text {
-      font-size: 1.2rem;
-    }
+    .main-nav { display: none; }
+    .brand-text { font-size: 1.2rem; }
   }
 </style>

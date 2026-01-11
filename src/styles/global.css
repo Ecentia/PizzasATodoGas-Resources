@@ -1,172 +1,78 @@
----
-// src/components/Header.astro
----
+/* src/styles/global.css */
+:root {
+  --color-bg: #0a0a0a;
+  --color-bg-light: #1a1a1a;
+  --color-text-main: #ffffff;
+  --color-stone-grey: #d8d4cf; 
+  --color-accent: #ffc107; 
+  --color-accent-hover: #e0a800;
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --container-width: 1200px;
+}
 
-<header class="site-header">
-  <div class="container header-container">
-    <a href="/" class="brand-logo">
-      <img src="/favicon.ico" alt="Icono Moto Pizza" class="logo-icon" width="40" height="40" />
-      <span class="brand-text">PIZZAS A TODO GAS</span>
-    </a>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    <nav class="main-nav">
-      <ul>
-        <li><a href="/" class="active">Inicio</a></li>
-        <li><a href="#carta">Nuestra Carta</a></li>
-        <li><a href="#local">El Local</a></li> <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
+body {
+  background-color: var(--color-bg);
+  background-image: radial-gradient(circle at 20% 50%, #252525 0%, var(--color-bg) 60%);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
 
-    <div class="header-actions">
-      <button class="icon-btn search-btn" aria-label="Buscar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      </button>
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.1;
+}
 
-      <a href="tel:+34654843625" class="btn-header">
-        <span class="truck-icon">
-           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-        </span>
-        LLAMA AHORA
-      </a>
+a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
 
-      <button class="icon-btn menu-grid-btn" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-      </button>
-    </div>
-  </div>
-</header>
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
 
-<style>
-  .site-header {
-    position: absolute; /* Flota sobre el Hero */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    padding: 25px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Línea muy sutil */
-  }
+/* Animación Pizza */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.spin-slow {
+  animation: spin 60s linear infinite;
+}
 
-  /* BRAND */
-  .brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-  }
+/* Botones */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color-accent);
+  color: #000;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 15px 35px;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+}
 
-  .logo-icon {
-    /* Filtro para asegurar que el icono se vea bien sobre negro si fuera negro, 
-       pero al ser un favicon original suele ser colorido. 
-       Si tu favicon es negro, descomenta la siguiente línea: */
-    /* filter: invert(1); */
-    height: 40px;
-    width: auto;
-  }
-
-  .brand-text {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-text-main);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* NAV */
-  .main-nav ul {
-    display: flex;
-    gap: 40px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .main-nav a {
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text-main);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-  }
-
-  .main-nav a:hover, .main-nav a.active {
-    color: var(--color-accent);
-  }
-
-  /* Indicador visual de hover como en la referencia (flechita o punto) */
-  .main-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background-color: var(--color-accent);
-    transition: width 0.3s ease;
-  }
-
-  .main-nav a:hover::after {
-    width: 100%;
-  }
-
-  /* ACTIONS */
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .icon-btn {
-    background: none;
-    border: none;
-    color: var(--color-text-main);
-    cursor: pointer;
-    transition: color 0.3s ease;
-    display: flex;
-    align-items: center;
-  }
-
-  .icon-btn:hover {
-    color: var(--color-accent);
-  }
-
-  .btn-header {
-    background-color: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: var(--color-text-main);
-    padding: 10px 20px;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-  }
-
-  .btn-header:hover {
-    background-color: var(--color-accent);
-    border-color: var(--color-accent);
-    color: #000;
-  }
-
-  /* Ocultar menú en móvil para simplificar el ejemplo (responsive básico) */
-  @media (max-width: 900px) {
-    .main-nav {
-      display: none; /* En producción usaríamos un menú hamburguesa */
-    }
-    .brand-text {
-      font-size: 1.2rem;
-    }
-  }
-</style>
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 193, 7, 0.2);
+}
