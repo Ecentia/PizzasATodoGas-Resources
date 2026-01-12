@@ -1,0 +1,272 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    
+    <div class="footer-col brand-col">
+      <div class="brand-header">
+        <span class="brand-text">PIZZAS A TODO GAS</span>
+        <img src="/logo.webp" alt="Logo Pizza" class="brand-icon" width="65" height="65" />
+      </div>
+      <p class="brand-desc">
+        Sabor auténtico a toda velocidad en El Saucejo.
+      </p>
+      
+      <div class="social-row">
+        <a href="https://www.instagram.com/pizzasatodogass/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+        <span class="separator">•</span>
+        <a href="https://www.facebook.com/miguel.caro.75286/?locale=es_ES" target="_blank" rel="noopener noreferrer" class="social-link">Facebook</a>
+      </div>
+    </div>
+
+    <div class="footer-col info-col">
+      <h4 class="col-heading">UBICACIÓN & CONTACTO</h4>
+      <div class="info-block">
+        <a href="https://goo.gl/maps/placeholder" target="_blank" class="info-link">El Saucejo, Sevilla</a>
+        <a href="tel:+34654843625" class="info-link highlight">654 84 36 25</a>
+      </div>
+      
+      <div class="nav-links">
+        <a href="#carta">Ver Carta</a>
+        <a href="#local">El Local</a>
+      </div>
+    </div>
+
+    <div class="footer-col hours-col">
+      <h4 class="col-heading">HORARIO DE APERTURA</h4>
+      <ul class="hours-list">
+        <li class="open-day">
+          <span class="day">Jueves a Lunes</span>
+          <span class="time">20:00h - 23:00h</span>
+        </li>
+        <li class="closed-day">
+          <span class="day">Martes y Miércoles</span>
+          <span class="time">CERRADO</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container bottom-content">
+      <span class="copyright">© {currentYear} Pizzas A Todo Gas</span>
+      
+      <div class="powered-by">
+        <span>Desarrollado por</span>
+        <a href="https://ecentia.es" target="_blank" rel="noopener noreferrer" class="ecentia-logo">
+          ECENTIA
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: #080808;
+    color: #e5e5e5;
+    padding-top: 70px;
+    font-family: var(--font-body, sans-serif);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 50px;
+    padding-bottom: 60px;
+    align-items: start;
+  }
+
+  /* MARCA */
+  .brand-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--color-accent, #ffc107);
+    padding-bottom: 15px;
+  }
+
+  .brand-text {
+    font-family: var(--font-heading, sans-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .brand-icon {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+  }
+
+  .brand-desc {
+    color: #999;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  .social-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-heading, sans-serif);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .social-link {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .social-link:hover {
+    color: var(--color-accent, #ffc107);
+    border-color: var(--color-accent, #ffc107);
+  }
+
+  .separator { color: #555; }
+
+  /* COLUMNAS */
+  .col-heading {
+    font-family: var(--font-heading, sans-serif);
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 25px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+
+  .info-link {
+    font-size: 1.1rem;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .info-link:hover { color: var(--color-accent, #ffc107); }
+  
+  .highlight {
+    font-weight: 700;
+    color: var(--color-accent, #ffc107);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links a {
+    font-size: 0.9rem;
+    color: #999;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover { color: #fff; }
+
+  /* HORARIO */
+  .hours-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .hours-list li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .hours-list .day {
+    font-weight: 700;
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  .hours-list .time {
+    color: #999;
+    font-size: 0.95rem;
+  }
+  
+  .closed-day .time {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  /* BARRA INFERIOR */
+  .footer-bottom {
+    background-color: #000;
+    padding: 20px 0;
+    border-top: 1px solid #1a1a1a;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .powered-by {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ecentia-logo {
+    font-family: var(--font-heading, sans-serif);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .ecentia-logo:hover { color: var(--color-accent, #ffc107); }
+
+  /* RESPONSIVE */
+  @media (max-width: 850px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .brand-header {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    
+    .bottom-content {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+  }
+</style>
