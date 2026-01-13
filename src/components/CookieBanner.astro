@@ -1,0 +1,186 @@
+---
+// src/components/CookieBanner.astro
+---
+
+<div id="cookie-banner" class="cookie-banner">
+  <div class="banner-content">
+    <div class="text-group">
+      <span class="cookie-icon">🍪</span>
+      <p class="cookie-text">
+        Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra 
+        <a href="/legal/politica-privacidad">Política de Privacidad</a>.
+      </p>
+    </div>
+    
+    <div class="cookie-actions">
+      <button id="btn-reject" class="btn btn-outline">Rechazar</button>
+      <button id="btn-accept" class="btn btn-fill">ACEPTAR</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('cookie-banner');
+  const btnAccept = document.getElementById('btn-accept');
+  const btnReject = document.getElementById('btn-reject');
+  const STORAGE_KEY = 'pizzasATodoGas_consent';
+
+  function checkScroll() {
+    // Comprobamos si ya hay consentimiento
+    if (localStorage.getItem(STORAGE_KEY)) return;
+
+    // AUMENTADO: Ahora hay que bajar 350px para que salga (antes 100)
+    if (window.scrollY > 350) {
+      banner?.classList.add('visible');
+      window.removeEventListener('scroll', checkScroll);
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll);
+
+  btnAccept?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'accepted');
+    banner?.classList.remove('visible');
+  });
+
+  btnReject?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'rejected');
+    banner?.classList.remove('visible');
+  });
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    width: 90%;
+    max-width: 900px;
+    
+    /* Fondo oscuro sólido pero con un toque de transparencia */
+    background-color: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(8px);
+    
+    /* Borde fino dorado acorde a la marca */
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    
+    /* Bordes ligeramente redondeados (no redondos del todo) */
+    border-radius: 6px; 
+    z-index: 9999;
+    
+    /* Padding reducido para menos altura */
+    padding: 12px 20px;
+    
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    font-family: var(--font-body, 'Roboto', sans-serif);
+  }
+
+  .cookie-banner.visible {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .text-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .cookie-icon {
+    font-size: 1.2rem;
+  }
+
+  .cookie-text {
+    color: #e0e0e0;
+    font-size: 0.9rem; /* Texto un pelín más pequeño */
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .cookie-text a {
+    color: var(--color-accent, #ffc107);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ESTILO DE BOTONES ACTUALIZADO */
+  .btn {
+    padding: 8px 16px; /* Botones más compactos */
+    font-family: var(--font-heading, 'Oswald', sans-serif); /* Fuente de la marca */
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px; /* Bordes rectos/suaves (No redondos tipo pastilla) */
+  }
+
+  /* Botón Principal (Aceptar) */
+  .btn-fill {
+    background-color: var(--color-accent, #ffc107);
+    color: #000;
+    border: 1px solid var(--color-accent, #ffc107);
+    font-weight: 600;
+  }
+
+  .btn-fill:hover {
+    background-color: #ffe066;
+    border-color: #ffe066;
+    transform: translateY(-1px);
+  }
+
+  /* Botón Secundario (Rechazar) */
+  .btn-outline {
+    background-color: transparent;
+    color: #bbb;
+    border: 1px solid #444;
+  }
+
+  .btn-outline:hover {
+    border-color: #fff;
+    color: #fff;
+  }
+
+  /* Responsive Móvil */
+  @media (max-width: 768px) {
+    .cookie-banner {
+      width: 95%;
+      bottom: 15px;
+      padding: 15px;
+    }
+
+    .banner-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .cookie-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+    
+    .btn {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+    }
+  }
+</style>

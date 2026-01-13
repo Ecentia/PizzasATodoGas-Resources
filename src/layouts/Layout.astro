@@ -3,10 +3,11 @@
 import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro'; // Importamos el banner
 import '../styles/global.css';
 
 interface Props {
-	title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
@@ -14,46 +15,48 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Pizzería A Todo Gas - El Saucejo. Sabor auténtico y entrega rápida." />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/logo.webp" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Pizzería A Todo Gas - El Saucejo. Sabor auténtico y entrega rápida." />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/logo.webp" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-		<ViewTransitions />
-	</head>
-	<body>
-		<div class="app-layout">
-			<Header />
-			
-			<main>
-				<slot />
-			</main>
-			
-			<Footer />
-		</div>
-	</body>
+        <ViewTransitions />
+    </head>
+    <body>
+        <div class="app-layout">
+            <Header />
+            
+            <main>
+                <slot />
+            </main>
+            
+            <Footer />
+        </div>
+
+        <CookieBanner />
+    </body>
 </html>
 
 <style>
-	/* Layout Flex para asegurar que el footer siempre se pegue al fondo (Sticky Footer) */
-	.app-layout {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		position: relative;
-	}
+    /* Layout Flex para asegurar que el footer siempre se pegue al fondo (Sticky Footer) */
+    .app-layout {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        position: relative;
+    }
 
-	main {
-		flex: 1; /* Ocupa todo el espacio disponible empujando el footer */
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-	}
+    main {
+        flex: 1; /* Ocupa todo el espacio disponible empujando el footer */
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
 </style>
