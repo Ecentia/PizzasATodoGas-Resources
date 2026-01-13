@@ -56,14 +56,25 @@ const currentPath = Astro.url.pathname;
 <style>
   /* --- LAYOUT HEADER --- */
   .site-header {
-    position: absolute;
+    position: fixed; /* CAMBIO: De absolute a fixed para que siga el scroll */
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 1000; /* Aumentamos z-index para asegurar que esté sobre todo */
     padding: 10px 0;
+    /* Mantenemos el degradado original para el estado inicial */
     background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease; /* Suavizamos la transición de estilos */
+  }
+
+  /* NUEVO: Estado cuando se hace scroll */
+  .site-header.scrolled {
+    background: rgba(10, 10, 10, 0.95); /* Fondo oscuro casi sólido */
+    backdrop-filter: blur(10px); /* Efecto cristal desenfocado moderno */
+    padding: 5px 0; /* Reducimos ligeramente el padding para que sea más compacto */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Sombra para separar del contenido */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   /* Contenedor fluido y ancho */
@@ -264,3 +275,29 @@ const currentPath = Astro.url.pathname;
     .btn-call .number { font-size: 1rem; }
   }
 </style>
+<script>
+  // Función para manejar el estado del header
+  const initHeaderScroll = () => {
+    const header = document.querySelector('.site-header');
+    const scrollThreshold = 50; // Píxeles de scroll para activar el efecto
+
+    if (!header) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > scrollThreshold) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    };
+
+    // Escuchar el evento scroll
+    window.addEventListener('scroll', handleScroll);
+    
+    // Ejecutar una vez al inicio por si la página ya está scrolleada al cargar
+    handleScroll();
+  };
+
+  // Ejecutar en la carga inicial y en cada navegación de Astro ViewTransitions
+  document.addEventListener('astro:page-load', initHeaderScroll);
+</script>
