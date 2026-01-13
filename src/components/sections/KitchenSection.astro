@@ -1,0 +1,52 @@
+---
+// src/components/KitchenSection.astro
+const kitchenItems = [
+  { title: "BURGER GOURMET", desc: "Nuestra espectacular hamburguesa de pan negro.", img: "/comida/hamburguesaNegra.webp" },
+  { title: "CAZÓN EN ADOBO", desc: "El auténtico sabor del sur, crujiente y sabroso.", img: "/comida/cazón.webp" },
+  { title: "PUNTILLITAS", desc: "Fritas al punto perfecto, ideales para compartir.", img: "/comida/puntillitas.webp" }
+];
+---
+
+<section class="kitchen-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <h3 class="section-subtitle">MÁS QUE PIZZAS</h3>
+      <h2 class="section-title">NUESTRA <span class="text-accent">COCINA</span></h2>
+      <p class="section-desc">¿Hoy no te apetece pizza? No hay problema. Descubre nuestra variedad de platos, hamburguesas y tapas caseras.</p>
+    </div>
+    <div class="kitchen-grid">
+      {kitchenItems.map((item) => (
+        <div class="kitchen-card square-format">
+          <div class="card-image" style={`background-image: url('${item.img}');`}></div>
+          <div class="card-overlay">
+            <h4>{item.title}</h4>
+            <p>{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  section { position: relative; width: 100%; }
+  .text-center { text-align: center; }
+  .section-subtitle { color: var(--color-accent); font-family: var(--font-body); font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; font-size: 0.9rem; }
+  .section-title { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; margin-bottom: 20px; }
+  .section-desc { max-width: 600px; margin: 0 auto 40px auto; color: var(--color-stone-grey); }
+  .text-accent { color: var(--color-accent); }
+
+  .kitchen-section { padding: 100px 0; background-color: var(--color-bg); }
+  .kitchen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; justify-content: center; }
+  .kitchen-card { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 15px; overflow: hidden; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .card-image { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.5s ease; }
+  .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); padding: 20px; transform: translateY(10px); transition: all 0.3s ease; }
+  .card-overlay h4 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-accent); text-transform: uppercase; margin-bottom: 5px; }
+  .card-overlay p { font-size: 0.95rem; color: #ddd; }
+  .kitchen-card:hover .card-image { transform: scale(1.1); }
+  .kitchen-card:hover .card-overlay { transform: translateY(0); padding-bottom: 30px; }
+
+  @media (max-width: 968px) {
+    .kitchen-grid { grid-template-columns: 1fr; }
+  }
+</style>

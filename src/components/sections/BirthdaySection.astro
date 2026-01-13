@@ -1,0 +1,78 @@
+---
+// src/components/BirthdaySection.astro
+const birthdayPhotos = [
+  "/cumpleaños/niños.webp",
+  "/cumpleaños/image-Photoroom.webp",
+  "/cumpleaños/image-Photoroom (2).webp",
+  "/cumpleaños/9b5feaa6-6e88-4e06-b8fa-caa21cb05c9b.webp"
+];
+---
+
+<section class="birthday-section">
+  <div class="container split-layout align-center">
+    <div class="text-content">
+      <h3 class="section-subtitle">20 AÑOS CELEBRANDO</h3>
+      <h2 class="section-title">EL REY DE LOS<br><span class="text-outline">CUMPLEAÑOS</span></h2>
+      <p>Ven a celebrar con nosotros. Tenemos todo listo para que sea un día inolvidable tanto para los peques como para los padres.</p>
+      <ul class="features-list">
+        <li><span class="feature-icon">🏰</span><div><strong>Castillo Hinchable</strong><br><small>Diversión asegurada</small></div></li>
+        <li><span class="feature-icon">👨‍👩‍👧‍👦</span><div><strong>Zona de Padres</strong><br><small>Relax y buenas tapas</small></div></li>
+        <li><span class="feature-icon">🍽️</span><div><strong>Menús Especiales</strong><br><small>Meriendas y cenas</small></div></li>
+      </ul>
+      <div class="stats-row">
+        <div class="stat-item"><span class="stat-number">+20</span><span class="stat-label">Años de Experiencia</span></div>
+      </div>
+    </div>
+    
+    <div class="birthday-slider-container">
+        <div class="birthday-slider-wrapper">
+            <div class="slider-track">
+              {[...birthdayPhotos, ...birthdayPhotos, ...birthdayPhotos].map((photo) => (
+                <div class="slide-item">
+                  <img src={photo} alt="Celebración Cumpleaños" loading="lazy" />
+                </div>
+              ))}
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section { position: relative; width: 100%; }
+  .section-subtitle { color: var(--color-accent); font-family: var(--font-body); font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; font-size: 0.9rem; }
+  .section-title { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; margin-bottom: 20px; }
+  .text-outline { -webkit-text-stroke: 1px var(--color-text-main); color: transparent; }
+  
+  .birthday-section { padding: 100px 0; background-color: #0f0f0f; overflow: hidden; }
+  .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .align-center { align-items: center; }
+
+  .features-list { list-style: none; margin-top: 30px; display: flex; flex-direction: column; gap: 20px; }
+  .features-list li { display: flex; align-items: center; gap: 15px; }
+  .feature-icon { font-size: 2rem; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 50%; }
+  .features-list strong { font-family: var(--font-heading); font-size: 1.1rem; color: #fff; text-transform: uppercase; }
+  .features-list small { color: var(--color-stone-grey); }
+  .stats-row { margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+  .stat-number { font-size: 3rem; font-family: var(--font-heading); color: var(--color-accent); font-weight: 700; line-height: 1; display: block;}
+  .stat-label { font-family: var(--font-heading); text-transform: uppercase; color: var(--color-stone-grey); letter-spacing: 1px; }
+
+  .birthday-slider-container { width: 100%; padding: 80px 0; overflow: hidden; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+  .birthday-slider-wrapper { position: relative; width: 100%; height: 400px; }
+  .slider-track { display: flex; gap: 40px; position: absolute; left: 0; top: 50%; transform: translateY(-50%); animation: scroll-horizontal-centered 30s linear infinite; }
+  @keyframes scroll-horizontal-centered { 0% { transform: translate(0, -50%); } 100% { transform: translate(-50%, -50%); } }
+  
+  .birthday-slider-container:hover .slider-track { animation-play-state: paused; }
+  .slide-item { width: 260px; height: 400px; flex-shrink: 0; border-radius: 15px; overflow: hidden; border: 4px solid #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: rotate(-3deg); transition: transform 0.3s ease, border-color 0.3s ease; background: #222; margin: 20px 0; }
+  .slide-item:nth-child(even) { transform: rotate(3deg); }
+  .slide-item:hover { transform: scale(1.08) rotate(0deg) !important; z-index: 10; border-color: var(--color-accent); box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+  .slide-item img { width: 100%; height: 100%; object-fit: cover; }
+
+  @media (max-width: 968px) {
+    .split-layout { grid-template-columns: 1fr; text-align: center; }
+    .birthday-slider-container { padding: 60px 0; }
+    .birthday-slider-wrapper { height: 320px; }
+    .slide-item { width: 210px; height: 320px; margin: 10px 0; }
+    .slider-track { gap: 30px; }
+  }
+</style>

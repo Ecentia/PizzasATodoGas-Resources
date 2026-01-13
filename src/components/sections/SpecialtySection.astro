@@ -1,0 +1,45 @@
+---
+// src/components/SpecialtySection.astro
+interface Props {
+  pizza1: { src: string };
+  pizza2: { src: string };
+}
+const { pizza1, pizza2 } = Astro.props;
+---
+
+<section class="specialty-section text-center">
+  <div class="container">
+    <h3 class="section-subtitle">MÁS SABOR, MÁS TAMAÑO</h3>
+    <h2 class="section-title">LA CALIDAD <span class="text-accent">SE NOTA</span></h2>
+    <p class="section-desc">Elaboramos nuestra masa diariamente con ingredientes frescos. El resultado: pizzas artesanas que no tienen competencia.</p>
+    <div class="pizzas-animation-wrapper">
+         <div class="round-gallery-container">
+            <div class="round-item float-1" style={`background-image: url('${pizza1.src}');`}></div>
+            <div class="round-item float-2" style={`background-image: url('${pizza2.src}');`}></div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section { position: relative; width: 100%; }
+  .text-center { text-align: center; }
+  .section-subtitle { color: var(--color-accent); font-family: var(--font-body); font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; font-size: 0.9rem; }
+  .section-title { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; margin-bottom: 20px; }
+  .section-desc { max-width: 600px; margin: 0 auto 40px auto; color: var(--color-stone-grey); }
+  .text-accent { color: var(--color-accent); }
+
+  .specialty-section { padding: 80px 0 120px 0; background-color: var(--color-bg); }
+  .pizzas-animation-wrapper { position: relative; height: 450px; margin-top: 50px; }
+  .round-gallery-container { display: flex; justify-content: center; gap: 0px; position: relative; height: 100%; align-items: center; }
+  .round-item { width: 400px; height: 400px; border-radius: 50%; background-size: cover; background-position: center; border: 6px solid var(--color-accent); box-shadow: 0 30px 60px rgba(0,0,0,0.6); transition: transform 0.3s ease; position: relative; }
+  .float-1 { z-index: 1; transform: translateX(40px) translateY(-30px); }
+  .float-2 { z-index: 2; transform: translateX(-40px) translateY(30px); }
+  .round-item:hover { transform: scale(1.05); z-index: 10; }
+
+  @media (max-width: 968px) {
+    .round-gallery-container { flex-direction: column; gap: 40px; height: auto; }
+    .round-item { width: 300px; height: 300px; }
+    .float-1, .float-2 { transform: none; }
+  }
+</style>
