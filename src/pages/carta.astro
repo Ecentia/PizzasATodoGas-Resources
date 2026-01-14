@@ -1,13 +1,133 @@
 ---
-// src/pages/carta.astro
 import Layout from '../layouts/Layout.astro';
 import MenuCarta from '../components/MenuCarta.astro';
 ---
 
-<Layout title="Nuestra Carta Oficial | Pizzas A Todo Gas">
+<Layout title="Carta de Pizzas Artesanales | Precios y Menú Completo | Pizzas A Todo Gas">
+  <Fragment slot="head">
+    <!-- Meta Description -->
+    <meta name="description" content="Consulta nuestra carta completa: Pizza Barbacoa (10.50€), 4 Quesos (9.50€), Kebab (11.50€) y más. Masa fresca, horno de piedra. Reparto a domicilio El Saucejo. ☎️ 654 84 36 25" />
+    
+    <!-- Keywords -->
+    <meta name="keywords" content="carta pizzas el saucejo, precios pizzas sevilla, menu pizzeria, pizza barbacoa precio, pizza 4 quesos, pizza kebab, ofertas pizzas" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Carta Completa | Pizzas A Todo Gas" />
+    <meta property="og:description" content="Descubre toda nuestra variedad de pizzas artesanales con precios. Masa fresca diaria y horno de piedra." />
+    <meta property="og:image" content="https://pizzasatodogas.com/pizzas/Barbacoa.webp" />
+    <meta property="og:image:alt" content="Carta de pizzas artesanales" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:title" content="Carta de Pizzas | Pizzas A Todo Gas" />
+    <meta name="twitter:description" content="Barbacoa, 4 Quesos, Kebab y más. Consulta nuestra carta completa con precios." />
+    <meta name="twitter:image" content="https://pizzasatodogas.com/pizzas/Barbacoa.webp" />
+    
+    <!-- Schema.org Menu -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Menu",
+      "name": "Carta de Pizzas A Todo Gas",
+      "description": "Pizzas artesanales con masa fresca diaria",
+      "hasMenuSection": {
+        "@type": "MenuSection",
+        "name": "Pizzas Especiales",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Pizza Barbacoa",
+            "description": "Salsa barbacoa, carne picada, bacon crujiente, mozzarella y extra de queso",
+            "image": "https://pizzasatodogas.com/pizzas/Barbacoa.webp",
+            "offers": {
+              "@type": "Offer",
+              "price": "10.50",
+              "priceCurrency": "EUR"
+            },
+            "suitableForDiet": "https://schema.org/GlutenFreeDiet"
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pizza 4 Quesos",
+            "description": "Mozzarella, Roquefort, Emmental y Parmesano",
+            "image": "https://pizzasatodogas.com/pizzas/4quesos.webp",
+            "offers": {
+              "@type": "Offer",
+              "price": "9.50",
+              "priceCurrency": "EUR"
+            },
+            "suitableForDiet": "https://schema.org/VegetarianDiet"
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pizza Mar y Montaña",
+            "description": "Base de tomate, mozzarella, champiñones frescos y gambas seleccionadas",
+            "image": "https://pizzasatodogas.com/pizzas/champinonesYgambas.webp",
+            "offers": {
+              "@type": "Offer",
+              "price": "11.00",
+              "priceCurrency": "EUR"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pizza Clásica York",
+            "description": "Tomate, mozzarella, jamón york y champiñones",
+            "image": "https://pizzasatodogas.com/pizzas/champinonesYjamonYork.webp",
+            "offers": {
+              "@type": "Offer",
+              "price": "9.00",
+              "priceCurrency": "EUR"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pizza Roquefort Especial",
+            "description": "Intenso queso roquefort suavizado con jamón york de primera calidad",
+            "image": "https://pizzasatodogas.com/pizzas/roquefortYjamonYork.webp",
+            "offers": {
+              "@type": "Offer",
+              "price": "10.00",
+              "priceCurrency": "EUR"
+            }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Pizza Kebab",
+            "description": "Carne de kebab, salsa de yogur especial, cebolla y especias árabes",
+            "image": "https://pizzasatodogas.com/pizzas/pizzakebab.webp",
+            "offers": {
+              "@type": "Offer",
+              "price": "11.50",
+              "priceCurrency": "EUR"
+            }
+          }
+        ]
+      }
+    })} />
+    
+    <!-- Breadcrumb -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://pizzasatodogas.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Carta",
+          "item": "https://pizzasatodogas.com/carta"
+        }
+      ]
+    })} />
+  </Fragment>
+
   <div class="page-background">
     <div class="noise-overlay"></div>
-    
     <div class="content-container">
       <MenuCarta />
     </div>

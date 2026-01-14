@@ -1,9 +1,5 @@
 ---
-// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro'; // Asegúrate que esta ruta es correcta
-
-// --- IMPORTS DE SECCIONES ---
 import Hero from '../components/sections/Hero.astro';
 import OfferBanner from '../components/sections/OfferBanner.astro';
 import KitchenSection from '../components/sections/KitchenSection.astro';
@@ -11,7 +7,6 @@ import BirthdaySection from '../components/sections/BirthdaySection.astro';
 import SpecialtySection from '../components/sections/SpecialtySection.astro';
 import LocationSection from '../components/sections/LocationSection.astro';
 
-// --- LÓGICA DE DATOS ---
 const allPizzas = [
   { src: '/pizzas/pizzakebab.webp', alt: 'Pizza Kebab Especial', badge: 'SABOR<br>ÚNICO' },
   { src: '/pizzas/4quesos.webp', alt: 'Pizza 4 Quesos', badge: 'SUPER<br>CREMOSA' },
@@ -27,7 +22,76 @@ const pizzaExp1 = shuffledPizzas[1];
 const pizzaExp2 = shuffledPizzas[2];
 ---
 
-<Layout title="Pizzas a todo Gas | El Saucejo">
+<Layout title="Pizzas A Todo Gas | Pizzería Artesanal en El Saucejo, Sevilla">
+  <Fragment slot="head">
+    <!-- Meta Description específica -->
+    <meta name="description" content="Descubre las mejores pizzas artesanales de El Saucejo. Masa fresca diaria, horno de piedra y más de 20 años de tradición. Reparto a domicilio. ☎️ 654 84 36 25. ¡Lunes 3x2!" />
+    
+    <!-- Keywords específicas página principal -->
+    <meta name="keywords" content="pizzas el saucejo, pizzeria sevilla, pizza artesanal, horno de piedra, reparto domicilio el saucejo, mejor pizza sevilla, masa fresca, cumpleaños pizzeria, lunes 3x2" />
+    
+    <!-- Open Graph específico -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pizzas A Todo Gas | La Mejor Pizzería de El Saucejo" />
+    <meta property="og:description" content="Pizzas artesanales con masa fresca, horno de piedra y más de 20 años de experiencia. Reparto a domicilio y ofertas especiales." />
+    <meta property="og:image" content="https://pizzasatodogas.com/pizzas/Barbacoa.webp" />
+    <meta property="og:image:alt" content="Pizza Barbacoa - Especialidad de la casa" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:title" content="Pizzas A Todo Gas | Pizzería Artesanal El Saucejo" />
+    <meta name="twitter:description" content="Las mejores pizzas artesanales de Sevilla. Masa fresca diaria y horno de piedra. ¡Lunes 3x2!" />
+    <meta name="twitter:image" content="https://pizzasatodogas.com/pizzas/Barbacoa.webp" />
+    
+    <!-- Schema.org adicional para Página Principal -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Pizzas A Todo Gas - Inicio",
+      "description": "Pizzería artesanal en El Saucejo con más de 20 años de experiencia",
+      "url": "https://pizzasatodogas.com",
+      "mainEntity": {
+        "@type": "Restaurant",
+        "name": "Pizzas A Todo Gas",
+        "image": "https://pizzasatodogas.com/logo-meta.webp"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["h1", ".hero-subtitle"]
+      }
+    })} />
+    
+    <!-- Offer Schema (Oferta 3x2 Lunes) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Offer",
+      "name": "Lunes 3x2 en Pizzas",
+      "description": "Llévate 3 pizzas y paga solo 2 todos los lunes",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "priceCurrency": "EUR",
+        "price": "0"
+      },
+      "eligibleDuration": {
+        "@type": "QuantitativeValue",
+        "value": 1,
+        "unitText": "DAY"
+      },
+      "seller": {
+        "@type": "Restaurant",
+        "name": "Pizzas A Todo Gas"
+      }
+    })} />
+  </Fragment>
+  
+  <main>
+    <Hero pizza={heroPizza} />
+    <OfferBanner />
+    <KitchenSection />
+    <BirthdaySection />
+    <SpecialtySection pizza1={pizzaExp1} pizza2={pizzaExp2} />
+    <LocationSection />
+  </main>
+</Layout>
   
  
   

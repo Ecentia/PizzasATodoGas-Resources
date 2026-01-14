@@ -1,13 +1,92 @@
 ---
-// src/pages/contacto.astro
 import Layout from '../layouts/Layout.astro';
 import Contacto from '../components/Contacto.astro';
 ---
 
-<Layout title="Contacto y Ubicación | Pizzas A Todo Gas">
+<Layout title="Contacto y Ubicación | Pizzas A Todo Gas El Saucejo">
+  <Fragment slot="head">
+    <!-- Meta Description -->
+    <meta name="description" content="Encuéntranos en Calle Dr. Gonzalo Gago Torres, El Saucejo, Sevilla. Teléfono ☎️ 654 84 36 25. Horario: Jueves a Lunes 20:00-23:00. Reparto a domicilio disponible." />
+    
+    <!-- Keywords -->
+    <meta name="keywords" content="contacto pizzeria el saucejo, telefono pizzas, direccion pizzeria sevilla, horario pizzeria, reparto a domicilio, como llegar, ubicacion" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="business.business" />
+    <meta property="og:title" content="Contacto | Pizzas A Todo Gas" />
+    <meta property="og:description" content="Llámanos al 654 84 36 25 o ven a visitarnos. Calle Dr. Gonzalo Gago Torres, El Saucejo." />
+    <meta property="og:image" content="https://pizzasatodogas.com/fotoPizzeria.webp" />
+    <meta property="og:image:alt" content="Local Pizzas A Todo Gas" />
+    <meta property="business:contact_data:street_address" content="Calle Dr. Gonzalo Gago Torres" />
+    <meta property="business:contact_data:locality" content="El Saucejo" />
+    <meta property="business:contact_data:region" content="Sevilla" />
+    <meta property="business:contact_data:postal_code" content="41650" />
+    <meta property="business:contact_data:country_name" content="España" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:title" content="Contacto | Pizzas A Todo Gas" />
+    <meta name="twitter:description" content="Llámanos al 654 84 36 25. Calle Dr. Gonzalo Gago Torres, El Saucejo, Sevilla." />
+    <meta name="twitter:image" content="https://pizzasatodogas.com/fotoPizzeria.webp" />
+    
+    <!-- Schema.org ContactPage -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contacto Pizzas A Todo Gas",
+      "description": "Información de contacto y ubicación de nuestra pizzería",
+      "url": "https://pizzasatodogas.com/contacto",
+      "mainEntity": {
+        "@type": "Restaurant",
+        "name": "Pizzas A Todo Gas",
+        "telephone": "+34654843625",
+        "email": "info@pizzasatodogas.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Calle Dr. Gonzalo Gago Torres",
+          "addressLocality": "El Saucejo",
+          "addressRegion": "Sevilla",
+          "postalCode": "41650",
+          "addressCountry": "ES"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 37.0693307,
+          "longitude": -5.0924655
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Thursday", "Friday", "Saturday", "Sunday", "Monday"],
+            "opens": "20:00",
+            "closes": "23:00"
+          }
+        ]
+      }
+    })} />
+    
+    <!-- Breadcrumb -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://pizzasatodogas.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contacto",
+          "item": "https://pizzasatodogas.com/contacto"
+        }
+      ]
+    })} />
+  </Fragment>
+
   <div class="page-background">
     <div class="noise-overlay"></div>
-    
     <div class="content-container">
       <Contacto />
     </div>

@@ -15,20 +15,154 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="Pizzería A Todo Gas - El Saucejo. Sabor auténtico y entrega rápida." />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/logo.webp" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-        <ViewTransitions />
-    </head>
+	<head>
+		<meta charset="UTF-8" />
+		
+		<!-- Meta básicas optimizadas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- SEO Principal -->
+		<title>{title}</title>
+		<meta name="description" content="Pizzas A Todo Gas en El Saucejo (Sevilla). Pizzas artesanales con masa fresca, horno de piedra y entrega a domicilio. ¡Más de 20 años de sabor auténtico! ☎️ 654 84 36 25" />
+		
+		<!-- Keywords locales -->
+		<meta name="keywords" content="pizzeria el saucejo, pizza sevilla, pizzas a domicilio el saucejo, horno de piedra, masa artesanal, cumpleaños, comida casera, mejores pizzas sevilla" />
+		
+		<!-- Autor y Copyright -->
+		<meta name="author" content="Pizzas A Todo Gas - Miguel Caro" />
+		<meta name="copyright" content="© 2025 Pizzas A Todo Gas" />
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+		
+		<!-- Canonical URL -->
+		<link rel="canonical" href={`https://pizzasatodogas.com${Astro.url.pathname}`} />
+		
+		<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Pizzas A Todo Gas" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content="Pizzería artesanal en El Saucejo. Masa fresca diaria, horno de piedra y 20 años de experiencia. Reparto a domicilio y para recoger." />
+		<meta property="og:url" content={`https://pizzasatodogas.com${Astro.url.pathname}`} />
+		<meta property="og:image" content="https://pizzasatodogas.com/logo-meta.webp" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="1200" />
+		<meta property="og:image:alt" content="Logo Pizzas A Todo Gas - Pizzería Artesanal" />
+		<meta property="og:locale" content="es_ES" />
+		
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content="Pizzas artesanales en El Saucejo, Sevilla. Horno de piedra y entrega rápida. ☎️ 654 84 36 25" />
+		<meta name="twitter:image" content="https://pizzasatodogas.com/logo-meta.webp" />
+		<meta name="twitter:image:alt" content="Logo Pizzas A Todo Gas" />
+		
+		<!-- Datos de negocio local (Schema.org JSON-LD) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Restaurant",
+		"name": "Pizzas A Todo Gas",
+		"image": [
+			"https://pizzasatodogas.com/logo-meta.webp",
+			"https://pizzasatodogas.com/fotoPizzeria.webp"
+		],
+		"logo": "https://pizzasatodogas.com/logo-meta.webp",
+		"url": "https://pizzasatodogas.com",
+		"telephone": "+34654843625",
+		"priceRange": "€€",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "Calle Dr. Gonzalo Gago Torres",
+			"addressLocality": "El Saucejo",
+			"addressRegion": "Sevilla",
+			"postalCode": "41650",
+			"addressCountry": "ES"
+		},
+		"geo": {
+			"@type": "GeoCoordinates",
+			"latitude": 37.0693307,
+			"longitude": -5.0924655
+		},
+		"openingHoursSpecification": [
+			{
+			"@type": "OpeningHoursSpecification",
+			"dayOfWeek": ["Thursday", "Friday", "Saturday", "Sunday", "Monday"],
+			"opens": "20:00",
+			"closes": "23:00"
+			}
+		],
+		"servesCuisine": ["Pizza", "Comida Italiana", "Comida Rápida"],
+		"menu": "https://pizzasatodogas.com/carta",
+		"acceptsReservations": "True",
+		"hasMenu": {
+			"@type": "Menu",
+			"hasMenuSection": {
+			"@type": "MenuSection",
+			"name": "Pizzas Especiales"
+			}
+		},
+		"aggregateRating": {
+			"@type": "AggregateRating",
+			"ratingValue": "4.7",
+			"reviewCount": "156",
+			"bestRating": "5",
+			"worstRating": "1"
+		},
+		"paymentAccepted": "Efectivo, Tarjeta de crédito",
+		"currenciesAccepted": "EUR"
+		})} />
+		
+		<!-- Breadcrumb Schema -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{
+			"@type": "ListItem",
+			"position": 1,
+			"name": "Inicio",
+			"item": "https://pizzasatodogas.com"
+			}
+		]
+		})} />
+		
+		<!-- Favicon y Iconos -->
+		<link rel="icon" type="image/webp" href="/logo.webp" />
+		<link rel="apple-touch-icon" href="/logo-meta.webp" />
+		<link rel="shortcut icon" href="/logo.webp" />
+		
+		<!-- Preconnect a fuentes -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+		
+		<!-- Prefetch DNS para recursos externos -->
+		<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+		<link rel="dns-prefetch" href="https://www.google-analytics.com">
+		<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+		
+		<!-- Theme Color para navegadores móviles -->
+		<meta name="theme-color" content="#ffc107" />
+		<meta name="msapplication-TileColor" content="#ffc107" />
+		<meta name="msapplication-TileImage" content="/logo-meta.webp" />
+		
+		<!-- Google Analytics 4 -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+		<script is:inline>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-XXXXXXXXXX', {
+			'anonymize_ip': true,
+			'cookie_flags': 'SameSite=None;Secure',
+			'page_path': window.location.pathname
+		});
+		</script>
+		
+		<!-- Slot para meta tags adicionales de cada página -->
+		<slot name="head" />
+		
+		<ViewTransitions />
+	</head>
     <body>
         <div class="app-layout">
             <Header />

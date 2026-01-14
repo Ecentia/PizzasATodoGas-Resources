@@ -1,0 +1,15 @@
+# Robots.txt optimizado para Pizzas A Todo Gas
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://pizzasatodogas.com/sitemap-index.xml
+
+# Crawl-delay para bots pesados
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
