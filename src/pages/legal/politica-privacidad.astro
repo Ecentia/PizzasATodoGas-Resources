@@ -1,0 +1,146 @@
+---
+// src/pages/legal/politica-privacidad.astro
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Política de Privacidad | Pizzas A Todo Gas">
+  <section class="legal-page">
+    <div class="container">
+      <h1>Política de Privacidad</h1>
+
+      <div class="legal-content">
+        <p>
+          En <strong>Pizzas A Todo Gas</strong> nos comprometemos a proteger la privacidad de los clientes que solicitan nuestros servicios. Esta política detalla cómo tratamos la información personal necesaria para gestionar sus pedidos.
+        </p>
+
+        <h2>1. Responsable del Tratamiento</h2>
+        <p>
+          Los datos personales recabados a través de llamadas telefónicas o gestión de pedidos serán tratados por el responsable de la actividad:
+        </p>
+        <div class="info-box">
+          <p><strong>Titular:</strong> Miguel Caro (Pizzas A Todo Gas)</p>
+          <p><strong>Dirección:</strong> Calle Dr. Gonzalo Gago Torres, 41650 El Saucejo (Sevilla)</p>
+          <p><strong>Teléfono:</strong> +34 654 84 36 25</p>
+        </div>
+
+        <h2>2. Finalidad de los Datos</h2>
+        <p>
+          La recogida y tratamiento de los Datos Personales (como nombre, dirección de entrega y teléfono) tiene como única finalidad:
+        </p>
+        <ul>
+          <li><strong>Gestión de Pedidos:</strong> Tramitar y entregar los encargos de comida a domicilio o para recoger en el local.</li>
+          <li><strong>Atención al Cliente:</strong> Resolver dudas sobre alérgenos, horarios o disponibilidad de productos.</li>
+          <li><strong>Facturación:</strong> Cumplimiento de las obligaciones contables y fiscales requeridas por la ley.</li>
+        </ul>
+        <p>
+          No se cederán datos a terceros salvo obligación legal (como a la Agencia Tributaria) o a proveedores estrictamente necesarios para la operativa del negocio (servicios de reparto externos si los hubiera).
+        </p>
+
+        <h2>3. Derechos de los Usuarios</h2>
+        <p>
+          El usuario podrá ejercer en todo momento sus derechos de acceso, rectificación, cancelación, oposición, limitación y portabilidad de sus datos. 
+        </p>
+        <p>
+          Para ello, puede dirigirse por escrito a nuestra dirección postal en <strong>Calle Dr. Gonzalo Gago Torres, 41650 El Saucejo (Sevilla)</strong>, indicando la referencia "Protección de Datos" y adjuntando copia de su documento de identidad para verificar su titularidad.
+        </p>
+
+        <h2>4. Conservación de los Datos</h2>
+        <p>
+          Los datos proporcionados se conservarán mientras se mantenga la relación comercial (es decir, mientras siga siendo cliente habitual) o durante los años necesarios para cumplir con las obligaciones legales (normativa fiscal). Posteriormente, los datos serán suprimidos con las medidas de seguridad adecuadas.
+        </p>
+
+        <h2>5. Seguridad</h2>
+        <p>
+          Hemos adoptado las medidas técnicas y organizativas necesarias para garantizar la seguridad de sus datos personales y evitar su alteración, pérdida, tratamiento o acceso no autorizado, habida cuenta del estado de la tecnología, la naturaleza de los datos almacenados y los riesgos a que están expuestos.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .legal-page {
+    padding: 140px 0 100px;
+    background-color: #0d0d0d;
+    color: #e0e0e0;
+    min-height: 80vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  h1 {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    font-size: 2.5rem;
+    color: var(--color-accent, #ffc107);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    border-bottom: 2px solid rgba(255, 193, 7, 0.2);
+    padding-bottom: 15px;
+  }
+
+  .legal-content h2 {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    font-size: 1.4rem;
+    color: #fff;
+    margin-top: 40px;
+    margin-bottom: 15px;
+  }
+
+  .legal-content p, 
+  .legal-content ul {
+    font-family: var(--font-body, 'Roboto', sans-serif);
+    line-height: 1.7;
+    color: #ccc;
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
+  /* Caja de datos idéntica al Aviso Legal para mantener diseño */
+  .info-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 4px;
+    border-left: 3px solid var(--color-accent, #ffc107);
+    margin-bottom: 25px;
+  }
+
+  .info-box p {
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .info-box strong {
+    color: var(--color-accent, #ffc107);
+    margin-right: 5px;
+  }
+
+  .legal-content ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.03);
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .legal-content li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  
+  .legal-content li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .legal-content strong {
+    color: #fff;
+    font-weight: 600;
+  }
+</style>

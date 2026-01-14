@@ -1,0 +1,133 @@
+---
+// src/pages/legal/accesibilidad.astro
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Declaración de Accesibilidad | Pizzas A Todo Gas">
+  <section class="legal-page">
+    <div class="container">
+      <h1>Declaración de Accesibilidad</h1>
+
+      <div class="legal-content">
+        <p>
+          En <strong>Pizzas A Todo Gas</strong> nos hemos comprometido a hacer accesible nuestro sitio web para todos los usuarios, independientemente de sus capacidades o de la tecnología que utilicen.
+        </p>
+
+        <h2>1. Situación de cumplimiento</h2>
+        <p>
+          Nos esforzamos para que nuestro sitio web cumpla con los estándares de accesibilidad para garantizar que cualquier persona pueda consultar nuestra carta y contactarnos. Actualmente, somos <strong>parcialmente conformes</strong> con las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1.
+        </p>
+
+        <h2>2. Contenido no accesible</h2>
+        <p>
+          Somos conscientes de que algunos elementos podrían no ser plenamente accesibles:
+        </p>
+        <ul>
+          <li><strong>Imágenes antiguas:</strong> Algunas fotos de platos subidas anteriormente podrían carecer de texto alternativo descriptivo.</li>
+          <li><strong>Contraste:</strong> Debido a la estética oscura de nuestra marca, algunos textos podrían presentar dificultades de lectura en pantallas con mucho brillo ambiental.</li>
+        </ul>
+
+        <h2>3. Alternativas y Contacto</h2>
+        <p>
+          Si encuentra dificultades para acceder a cualquier contenido de la web o desea realizar cualquier consulta sobre accesibilidad, ponemos a su disposición canales alternativos para atenderle personalmente.
+        </p>
+        <p>
+          Puede comunicar cualquier incidencia o solicitar información en formato accesible a través de:
+        </p>
+        
+        <div class="info-box">
+          <p><strong>Teléfono:</strong> +34 654 84 36 25</p>
+          <p><strong>Dirección:</strong> Calle Dr. Gonzalo Gago Torres, 41650 El Saucejo (Sevilla)</p>
+          <p><strong>Titular:</strong> Miguel Caro</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .legal-page {
+    padding: 140px 0 100px;
+    background-color: #0d0d0d;
+    color: #e0e0e0;
+    min-height: 80vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  h1 {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    font-size: 2.5rem;
+    color: var(--color-accent, #ffc107);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    border-bottom: 2px solid rgba(255, 193, 7, 0.2);
+    padding-bottom: 15px;
+  }
+
+  .legal-content h2 {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    font-size: 1.4rem;
+    color: #fff;
+    margin-top: 40px;
+    margin-bottom: 15px;
+  }
+
+  .legal-content p,
+  .legal-content li {
+    font-family: var(--font-body, 'Roboto', sans-serif);
+    line-height: 1.7;
+    color: #ccc;
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .legal-content ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 25px;
+    background: rgba(255,255,255,0.03);
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .legal-content li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  
+  .legal-content li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .legal-content strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* Caja de contacto igual que en las otras páginas */
+  .info-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 4px;
+    border-left: 3px solid var(--color-accent, #ffc107);
+    margin-top: 20px;
+  }
+
+  .info-box p {
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .info-box strong {
+    color: var(--color-accent, #ffc107);
+    margin-right: 5px;
+  }
+</style>
