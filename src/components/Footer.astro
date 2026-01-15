@@ -9,8 +9,8 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
     
     <div class="footer-col brand-col">
       <div class="brand-header">
-        <span class="brand-text">PIZZAS A TODO GAS</span>
         <img src="/logo.webp" alt="Logo Pizza" class="brand-icon" width="65" height="65" />
+        <span class="brand-text">PIZZAS A TODO GAS</span>
       </div>
       <p class="brand-desc">
         Sabor auténtico a toda velocidad en El Saucejo.
@@ -100,8 +100,8 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
     align-items: center;
     gap: 15px;
     margin-bottom: 20px;
-    border-bottom: 2px solid var(--color-accent, #ffc107);
-    padding-bottom: 15px;
+    /* Quitamos el borde inferior que a veces molesta en el diseño limpio */
+    padding-bottom: 5px;
   }
 
   .brand-text {
@@ -232,7 +232,7 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
     font-weight: 700;
   }
 
-  /* LEGAL LINKS (Nuevo estilo para la columna 4) */
+  /* LEGAL LINKS */
   .legal-links {
     list-style: none;
     padding: 0;
@@ -251,7 +251,7 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
 
   .legal-links a:hover {
     color: var(--color-accent, #ffc107);
-    padding-left: 5px; /* Efecto sutil de movimiento */
+    padding-left: 5px;
   }
 
   /* BARRA INFERIOR */
@@ -287,18 +287,62 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
   
   .ecentia-logo:hover { color: var(--color-accent, #ffc107); }
 
-  /* RESPONSIVE */
-  @media (max-width: 850px) {
+  /* --- RESPONSIVE OPTIMIZADO --- */
+  @media (max-width: 900px) {
+    .site-footer {
+        padding-top: 50px;
+    }
+
     .footer-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
+      grid-template-columns: 1fr; /* Una sola columna */
+      gap: 50px;
+      text-align: center; /* Todo centrado para móvil */
     }
     
+    /* Branding Centrado */
+    .brand-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .brand-header {
       width: 100%;
-      justify-content: flex-start;
+      justify-content: center;
+      flex-direction: column; /* Logo encima del texto */
+      text-align: center;
     }
     
+    .brand-desc {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .social-row {
+        justify-content: center;
+    }
+
+    /* Centrar resto de bloques */
+    .info-col, .hours-col, .legal-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links {
+        justify-content: center;
+    }
+
+    .legal-links {
+        align-items: center;
+    }
+    
+    .legal-links a:hover {
+        padding-left: 0; /* Quitar efecto lateral en móvil */
+        color: var(--color-accent);
+    }
+    
+    /* Bottom Bar */
     .bottom-content {
       flex-direction: column;
       gap: 15px;

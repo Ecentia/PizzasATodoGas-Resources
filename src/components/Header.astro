@@ -46,38 +46,51 @@ const currentPath = Astro.url.pathname;
         <span class="location-text">VER MAPA</span>
       </a>
       
-      <button class="icon-btn menu-grid-btn" aria-label="Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <button class="icon-btn menu-grid-btn" aria-label="Abrir menú" id="mobile-menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
     </div>
   </div>
+
+  <div class="mobile-menu-overlay" id="mobile-menu">
+    <nav class="mobile-nav-content">
+      <ul class="mobile-links">
+        <li><a href="/" class="mobile-link">Inicio</a></li>
+        <li><a href="/carta" class="mobile-link">Nuestra Carta</a></li>
+        <li><a href="/local" class="mobile-link">El Local</a></li>
+        <li><a href="/contacto" class="mobile-link">Contacto</a></li>
+      </ul>
+      
+      <div class="mobile-menu-footer">
+        <p>Llámanos: <strong>654 84 36 25</strong></p>
+      </div>
+    </nav>
+  </div>
+
 </header>
 
 <style>
   /* --- LAYOUT HEADER --- */
   .site-header {
-    position: fixed; /* CAMBIO: De absolute a fixed para que siga el scroll */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000; /* Aumentamos z-index para asegurar que esté sobre todo */
+    z-index: 1000;
     padding: 10px 0;
-    /* Mantenemos el degradado original para el estado inicial */
     background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.4s ease; /* Suavizamos la transición de estilos */
+    transition: all 0.4s ease;
   }
 
-  /* NUEVO: Estado cuando se hace scroll */
   .site-header.scrolled {
-    background: rgba(10, 10, 10, 0.95); /* Fondo oscuro casi sólido */
-    backdrop-filter: blur(10px); /* Efecto cristal desenfocado moderno */
-    padding: 5px 0; /* Reducimos ligeramente el padding para que sea más compacto */
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Sombra para separar del contenido */
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 5px 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Contenedor fluido y ancho */
   .header-container {
     display: flex;
     justify-content: space-between;
@@ -95,6 +108,8 @@ const currentPath = Astro.url.pathname;
     gap: 15px;
     text-decoration: none;
     flex-shrink: 0;
+    z-index: 1002;
+    position: relative;
   }
 
   .logo-icon {
@@ -120,7 +135,7 @@ const currentPath = Astro.url.pathname;
     white-space: nowrap;
   }
 
-  /* --- NAV --- */
+  /* --- NAV ESCRITORIO --- */
   .main-nav ul {
     display: flex;
     gap: 40px;
@@ -141,13 +156,11 @@ const currentPath = Astro.url.pathname;
     transition: color 0.3s ease;
   }
 
-  /* Hover y estado activo */
   .main-nav a:hover, 
   .main-nav a.active {
     color: var(--color-accent);
   }
   
-  /* Subrayado animado para el estado activo */
   .main-nav a.active::after {
     content: '';
     position: absolute;
@@ -165,6 +178,8 @@ const currentPath = Astro.url.pathname;
     align-items: center;
     gap: 20px;
     flex-shrink: 0;
+    z-index: 1002;
+    position: relative;
   }
 
   .action-btn {
@@ -178,7 +193,6 @@ const currentPath = Astro.url.pathname;
     cursor: pointer;
   }
 
-  /* 1. ESTILO BOTÓN DE LLAMADA */
   .btn-call {
     background-color: var(--color-accent);
     color: #000;
@@ -223,7 +237,6 @@ const currentPath = Astro.url.pathname;
     letter-spacing: 0.5px;
   }
 
-  /* 2. ESTILO BOTÓN UBICACIÓN */
   .btn-location {
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -242,13 +255,75 @@ const currentPath = Astro.url.pathname;
     background: rgba(0,0,0,0.3);
   }
 
-  /* MENÚ MÓVIL */
   .menu-grid-btn {
     display: none;
     background: none;
     border: none;
     color: white;
     cursor: pointer;
+    padding: 5px;
+  }
+
+  /* --- MENU MOVIL OVERLAY --- */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-bg);
+    z-index: 1001;
+    padding-top: 100px; /* Ajustado al nuevo tamaño de header */
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .mobile-menu-overlay.open {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .mobile-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .mobile-link {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+
+  .mobile-link:hover {
+    color: var(--color-accent);
+  }
+
+  .mobile-menu-footer {
+    color: var(--color-stone-grey);
+    font-family: var(--font-body);
+    margin-top: 20px;
+  }
+  .mobile-menu-footer strong {
+    color: var(--color-accent);
   }
 
   /* --- RESPONSIVE --- */
@@ -259,45 +334,63 @@ const currentPath = Astro.url.pathname;
   }
 
   @media (max-width: 768px) {
+    .site-header {
+        padding: 5px 0; /* Header más compacto en móvil */
+    }
+
     .header-container { width: 100%; padding: 0 15px; }
     .brand-text { display: none; }
     
     .logo-icon {
-        width: 80px;
-        height: 80px;
+        width: 60px; /* Reducido de 80px a 60px para que no se vea tan tosco */
+        height: 60px;
     }
 
-    .btn-location { padding: 10px; }
-    .btn-location .location-text { display: none; }
+    .btn-location { display: none; }
     
-    .btn-call { padding: 8px 15px; }
+    .btn-call { padding: 6px 12px; }
     .btn-call .label { display: none; }
-    .btn-call .number { font-size: 1rem; }
+    .btn-call .number { font-size: 0.95rem; }
+    
+    .header-actions { gap: 10px; }
   }
 </style>
+
 <script>
-  // Función para manejar el estado del header
-  const initHeaderScroll = () => {
+  const initHeader = () => {
     const header = document.querySelector('.site-header');
-    const scrollThreshold = 50; // Píxeles de scroll para activar el efecto
-
-    if (!header) return;
-
-    const handleScroll = () => {
-      if (window.scrollY > scrollThreshold) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    };
-
-    // Escuchar el evento scroll
-    window.addEventListener('scroll', handleScroll);
+    const scrollThreshold = 20; // Umbral bajo para activar rápido el fondo oscuro
     
-    // Ejecutar una vez al inicio por si la página ya está scrolleada al cargar
-    handleScroll();
+    if (header) {
+      const handleScroll = () => {
+        if (window.scrollY > scrollThreshold) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      };
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
+    }
+
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
   };
 
-  // Ejecutar en la carga inicial y en cada navegación de Astro ViewTransitions
-  document.addEventListener('astro:page-load', initHeaderScroll);
+  document.addEventListener('astro:page-load', initHeader);
 </script>
