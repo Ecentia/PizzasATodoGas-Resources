@@ -145,7 +145,7 @@ const { title } = Astro.props;
 		<meta name="msapplication-TileColor" content="#ffc107" />
 		<meta name="msapplication-TileImage" content="/logo-meta.webp" />
 		
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TMPM6LQF"></script>
 <script is:inline>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -153,7 +153,7 @@ const { title } = Astro.props;
 
   // ESCUCHAMOS EL EVENTO DE ASTRO PARA CADA NAVEGACIÓN
   document.addEventListener('astro:page-load', () => {
-      gtag('config', 'G-XXXXXXXXXX', {
+      gtag('config', 'GTM-TMPM6LQF', {
           page_path: window.location.pathname,
           cookie_flags: 'SameSite=None;Secure'
       });
