@@ -4,6 +4,19 @@ import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout title="Política de Privacidad | Pizzas A Todo Gas">
+  <Fragment slot="head">
+    <meta name="description" content="Política de privacidad de Pizzas A Todo Gas. Infórmate sobre cómo tratamos tus datos personales, la finalidad del tratamiento y cómo ejercer tus derechos de protección de datos." />
+    <meta name="keywords" content="política de privacidad, protección de datos, LOPD, pizzas a todo gas, el saucejo, tratamiento de datos personales" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Política de Privacidad | Pizzas A Todo Gas" />
+    <meta property="og:description" content="Consulta nuestra política de privacidad y cómo protegemos la información personal de nuestros clientes." />
+    <meta property="og:url" content="https://pizzasatodogas.com/legal/politica-privacidad" />
+
+    <meta name="twitter:title" content="Política de Privacidad | Pizzas A Todo Gas" />
+    <meta name="twitter:description" content="Información detallada sobre la privacidad y protección de datos en Pizzas A Todo Gas." />
+  </Fragment>
+
   <section class="legal-page">
     <div class="container">
       <h1>Política de Privacidad</h1>
@@ -99,7 +112,6 @@ import Layout from '../../layouts/Layout.astro';
     margin-bottom: 15px;
   }
 
-  /* Caja de datos idéntica al Aviso Legal para mantener diseño */
   .info-box {
     background: rgba(255, 255, 255, 0.05);
     padding: 20px;

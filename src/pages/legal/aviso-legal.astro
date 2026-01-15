@@ -4,6 +4,19 @@ import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout title="Aviso Legal | Pizzas A Todo Gas">
+  <Fragment slot="head">
+    <meta name="description" content="Aviso legal de Pizzas A Todo Gas. Conoce los datos identificativos del titular, las condiciones generales de uso, política de propiedad intelectual y legislación aplicable." />
+    <meta name="keywords" content="aviso legal, términos de uso, condiciones legales, pizzas a todo gas, el saucejo" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Aviso Legal | Pizzas A Todo Gas" />
+    <meta property="og:description" content="Información legal sobre el titular del sitio web y condiciones de uso de la plataforma." />
+    <meta property="og:url" content="https://pizzasatodogas.com/legal/aviso-legal" />
+
+    <meta name="twitter:title" content="Aviso Legal | Pizzas A Todo Gas" />
+    <meta name="twitter:description" content="Consulta los términos legales y condiciones de uso de nuestro sitio web." />
+  </Fragment>
+
   <section class="legal-page">
     <div class="container">
       <h1>Aviso Legal</h1>
@@ -101,7 +114,6 @@ import Layout from '../../layouts/Layout.astro';
     margin-bottom: 15px;
   }
 
-  /* Caja para los datos del dueño que destaque un poco */
   .info-box {
     background: rgba(255, 255, 255, 0.05);
     padding: 20px;

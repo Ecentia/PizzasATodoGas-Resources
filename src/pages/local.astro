@@ -4,6 +4,19 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Dónde Estamos | Pizzas a todo Gas">
+  <Fragment slot="head">
+    <meta name="description" content="Visítanos en El Saucejo (Sevilla). Encuentra nuestra ubicación exacta en Av. Osuna 42, consulta nuestros horarios de apertura y ven a disfrutar de la mejor pizza artesanal en un ambiente único." />
+    <meta name="keywords" content="ubicación pizzería el saucejo, donde comer en el saucejo, horario pizzas a todo gas, cómo llegar pizzería saucejo, dirección pizzería sevilla" />
+    
+    <meta property="og:title" content="Dónde Estamos | Pizzas a todo Gas" />
+    <meta property="og:description" content="Tu punto de encuentro en El Saucejo. Consulta nuestra ubicación y horarios para venir a disfrutar de pizzas artesanas." />
+    <meta property="og:image" content="https://pizzasatodogas.com/fotoPizzeria.webp" />
+    <meta property="og:url" content="https://pizzasatodogas.com/local" />
+
+    <meta name="twitter:title" content="Dónde Estamos | Pizzas a todo Gas" />
+    <meta name="twitter:description" content="Ven a visitarnos a El Saucejo. Consulta aquí nuestro mapa y horarios de apertura." />
+    <meta name="twitter:image" content="https://pizzasatodogas.com/fotoPizzeria.webp" />
+  </Fragment>
   
   <div class="page-background">
     <div class="noise-overlay"></div>
@@ -15,7 +28,7 @@ import Layout from '../layouts/Layout.astro';
           <h3 class="section-subtitle">EL ORIGEN DEL SABOR</h3>
           <h2 class="section-title">VEN A <span class="text-accent">CONOCERNOS</span></h2>
           <p class="section-desc">
-            Más que una pizzería, somos tu punto de encuentro. 
+            Más que una pizzería, somos tu punto de encuentro.
             Donde las masas se estiran a mano y los amigos se juntan para celebrar.
           </p>
         </div>
@@ -81,7 +94,7 @@ import Layout from '../layouts/Layout.astro';
             loading="lazy" 
             allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"
-            src="https://maps.google.com/maps?q=Pizzas+A+Todo+Gas+El+Saucejo&t=&z=17&ie=UTF8&iwloc=&output=embed">
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3183.1365313936!2d-5.0946541!3d37.0693307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6d69094e9f548d%3A0xc3c9428c46440c9d!2sAv.%20de%20Osuna%2C%2042%2C%2041650%20El%20Saucejo%2C%20Sevilla!5e0!3m2!1ses!2ses!4v1710000000000!5m2!1ses!2ses">
           </iframe>
         </div>
 
@@ -91,130 +104,34 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
-  /* --- ESTILOS DE FONDO (Iguales a Carta) --- */
-  .page-background {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    background: radial-gradient(circle at 50% 10%, #1f1f1f 0%, #050505 100%);
-  }
-
-  .noise-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.04;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-    z-index: 0;
-  }
-
-  .content-container {
-    position: relative;
-    z-index: 1;
-    padding-top: 200px; /* Margen superior para el título */
-    padding-bottom: 50px;
-    animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes slideUpFade {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* --- ESTILOS LOCAL --- */
+  /* Mantener tus estilos originales */
+  .page-background { position: relative; width: 100%; min-height: 100vh; background: radial-gradient(circle at 50% 10%, #1f1f1f 0%, #050505 100%); }
+  .noise-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.04; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E"); z-index: 0; }
+  .content-container { position: relative; z-index: 1; padding-top: 200px; padding-bottom: 50px; animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .text-center { text-align: center; }
-
-  .section-subtitle { 
-    color: var(--color-accent); font-family: var(--font-body); font-weight: 700;
-    letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase; font-size: 0.9rem; 
-  }
-  .section-title { 
-    font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 25px; 
-    color: var(--color-text-main); 
-  }
+  .section-subtitle { color: var(--color-accent); font-family: var(--font-body); font-weight: 700; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase; font-size: 0.9rem; }
+  .section-title { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 25px; color: var(--color-text-main); }
   .text-accent { color: var(--color-accent); }
-  
-  .section-desc { 
-    max-width: 600px; margin: 0 auto 60px auto; 
-    color: var(--color-stone-grey); font-size: 1.1rem; 
-  }
-
-  /* GRID */
-  .location-grid { 
-    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center; margin-bottom: 80px; 
-  }
-  
-  /* FOTO */
-  .local-image-wrapper { 
-    position: relative; border-radius: 20px; overflow: hidden; 
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5); height: 500px; 
-  }
-  .local-photo { 
-    width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; 
-  }
+  .section-desc { max-width: 600px; margin: 0 auto 60px auto; color: var(--color-stone-grey); font-size: 1.1rem; }
+  .location-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center; margin-bottom: 80px; }
+  .local-image-wrapper { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5); height: 500px; }
+  .local-photo { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
   .local-image-wrapper:hover .local-photo { transform: scale(1.05); }
-
-  /* BADGE: ESQUINA SUPERIOR IZQUIERDA */
-  .years-badge { 
-    position: absolute; 
-    top: 25px; left: 25px; 
-    background: var(--color-accent); color: #000; 
-    width: 140px; height: 140px; border-radius: 50%; 
-    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 5px solid #fff; 
-    transform: rotate(-10deg); z-index: 10;
-  }
-  .years-badge .big { 
-    font-family: var(--font-heading); font-size: 3.8rem; font-weight: 700; line-height: 0.8; 
-  }
-  .years-badge .small { 
-    font-size: 0.9rem; font-weight: 800; line-height: 1; margin-top: 5px; 
-  }
-
-  /* INFO CARD */
-  .info-card { 
-    background: rgba(255,255,255,0.03); 
-    padding: 40px; border-radius: 20px; 
-    border: 1px solid rgba(255,255,255,0.1); 
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
-  }
+  .years-badge { position: absolute; top: 25px; left: 25px; background: var(--color-accent); color: #000; width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 5px solid #fff; transform: rotate(-10deg); z-index: 10; }
+  .years-badge .big { font-family: var(--font-heading); font-size: 3.8rem; font-weight: 700; line-height: 0.8; }
+  .years-badge .small { font-size: 0.9rem; font-weight: 800; line-height: 1; margin-top: 5px; }
+  .info-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
   .info-item { display: flex; gap: 20px; align-items: flex-start; }
-  
-  .icon-box { 
-    color: var(--color-accent); background: rgba(255, 193, 7, 0.1); 
-    width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; 
-    border-radius: 12px; flex-shrink: 0;
-  }
-  
-  .info-item h3 { 
-    font-family: var(--font-heading); color: var(--color-text-main); margin-bottom: 5px; 
-    font-size: 1.3rem; letter-spacing: 0.5px; 
-  }
-  .info-item p { 
-    color: var(--color-stone-grey); margin: 0; line-height: 1.6; font-size: 1rem; 
-  }
-  
-  .map-link { 
-    color: var(--color-accent); text-decoration: none; font-weight: 700; 
-    font-size: 0.95rem; margin-top: 8px; display: inline-block; 
-  }
+  .icon-box { color: var(--color-accent); background: rgba(255, 193, 7, 0.1); width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 12px; flex-shrink: 0; }
+  .info-item h3 { font-family: var(--font-heading); color: var(--color-text-main); margin-bottom: 5px; font-size: 1.3rem; letter-spacing: 0.5px; }
+  .info-item p { color: var(--color-stone-grey); margin: 0; line-height: 1.6; font-size: 1rem; }
+  .map-link { color: var(--color-accent); text-decoration: none; font-weight: 700; font-size: 0.95rem; margin-top: 8px; display: inline-block; }
   .map-link:hover { text-decoration: underline; }
-
-  .phone-number { 
-    font-size: 1.6rem !important; font-weight: 700; color: var(--color-text-main) !important; 
-  }
+  .phone-number { font-size: 1.6rem !important; font-weight: 700; color: var(--color-text-main) !important; }
   .status-open { color: #4CAF50 !important; font-weight: 700; margin-top: 5px; }
   .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 30px 0; }
-
-  /* MAPA */
-  .map-container { 
-    width: 100%; position: relative; border-radius: 20px; overflow: hidden; 
-    border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  }
-  /* Asegura que el iframe ocupe todo el contenedor */
+  .map-container { width: 100%; position: relative; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
   .map-container iframe { display: block; width: 100%; height: 500px; }
   
   @media (max-width: 968px) {

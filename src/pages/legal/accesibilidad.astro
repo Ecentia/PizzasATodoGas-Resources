@@ -4,6 +4,19 @@ import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout title="Declaración de Accesibilidad | Pizzas A Todo Gas">
+  <Fragment slot="head">
+    <meta name="description" content="Declaración de accesibilidad de Pizzas A Todo Gas. Nuestro compromiso es ofrecer una web accesible para todos los usuarios en El Saucejo, cumpliendo con los estándares WCAG 2.1." />
+    <meta name="keywords" content="accesibilidad web, declaración accesibilidad, pizzas a todo gas, el saucejo, pizzería accesible" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Declaración de Accesibilidad | Pizzas A Todo Gas" />
+    <meta property="og:description" content="Conoce nuestro compromiso para que todos puedan disfrutar de nuestra web y nuestra carta sin barreras." />
+    <meta property="og:url" content="https://pizzasatodogas.com/legal/accesibilidad" />
+
+    <meta name="twitter:title" content="Declaración de Accesibilidad | Pizzas A Todo Gas" />
+    <meta name="twitter:description" content="Declaración de accesibilidad y compromiso de inclusión digital de nuestra pizzería." />
+  </Fragment>
+
   <section class="legal-page">
     <div class="container">
       <h1>Declaración de Accesibilidad</h1>
@@ -112,7 +125,6 @@ import Layout from '../../layouts/Layout.astro';
     font-weight: 600;
   }
 
-  /* Caja de contacto igual que en las otras páginas */
   .info-box {
     background: rgba(255, 255, 255, 0.05);
     padding: 20px;
