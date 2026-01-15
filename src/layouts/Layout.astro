@@ -145,19 +145,21 @@ const { title } = Astro.props;
 		<meta name="msapplication-TileColor" content="#ffc107" />
 		<meta name="msapplication-TileImage" content="/logo-meta.webp" />
 		
-		<!-- Google Analytics 4 -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-		<script is:inline>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-XXXXXXXXXX', {
-			'anonymize_ip': true,
-			'cookie_flags': 'SameSite=None;Secure',
-			'page_path': window.location.pathname
-		});
-		</script>
-		
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  // ESCUCHAMOS EL EVENTO DE ASTRO PARA CADA NAVEGACIÓN
+  document.addEventListener('astro:page-load', () => {
+      gtag('config', 'G-XXXXXXXXXX', {
+          page_path: window.location.pathname,
+          cookie_flags: 'SameSite=None;Secure'
+      });
+  });
+</script>
+				
 		<!-- Slot para meta tags adicionales de cada página -->
 		<slot name="head" />
 		
