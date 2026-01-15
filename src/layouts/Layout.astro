@@ -1,9 +1,10 @@
 ---
 // src/layouts/Layout.astro
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import CookieBanner from '../components/CookieBanner.astro'; // Importamos el banner
+import CookieBanner from '../components/CookieBanner.astro';
+// Importamos el banner
 import '../styles/global.css';
 
 interface Props {
@@ -18,30 +19,26 @@ const { title } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		
-		<!-- Meta básicas optimizadas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
 		
-		<!-- SEO Principal -->
 		<title>{title}</title>
 		<meta name="description" content="Pizzas A Todo Gas en El Saucejo (Sevilla). Pizzas artesanales con masa fresca, horno de piedra y entrega a domicilio. ¡Más de 20 años de sabor auténtico! ☎️ 654 84 36 25" />
 		
-		<!-- Keywords locales -->
 		<meta name="keywords" content="pizzeria el saucejo, pizza sevilla, pizzas a domicilio el saucejo, horno de piedra, masa artesanal, cumpleaños, comida casera, mejores pizzas sevilla" />
 		
-		<!-- Autor y Copyright -->
 		<meta name="author" content="Pizzas A Todo Gas - Miguel Caro" />
 		<meta name="copyright" content="© 2025 Pizzas A Todo Gas" />
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 		
-		<!-- Canonical URL -->
 		<link rel="canonical" href={`https://pizzasatodogas.com${Astro.url.pathname}`} />
 		
-		<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Pizzas A Todo Gas" />
 		<meta property="og:title" content={title} />
-		<meta property="og:description" content="Pizzería artesanal en El Saucejo. Masa fresca diaria, horno de piedra y 20 años de experiencia. Reparto a domicilio y para recoger." />
+		<meta property="og:description" content="Pizzería artesanal en El Saucejo.
+Masa fresca diaria, horno de piedra y 20 años de experiencia.
+Reparto a domicilio y para recoger." />
 		<meta property="og:url" content={`https://pizzasatodogas.com${Astro.url.pathname}`} />
 		<meta property="og:image" content="https://pizzasatodogas.com/logo-meta.webp" />
 		<meta property="og:image:width" content="1200" />
@@ -49,14 +46,13 @@ const { title } = Astro.props;
 		<meta property="og:image:alt" content="Logo Pizzas A Todo Gas - Pizzería Artesanal" />
 		<meta property="og:locale" content="es_ES" />
 		
-		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content="Pizzas artesanales en El Saucejo, Sevilla. Horno de piedra y entrega rápida. ☎️ 654 84 36 25" />
+		<meta name="twitter:description" content="Pizzas artesanales en El Saucejo, Sevilla.
+Horno de piedra y entrega rápida. ☎️ 654 84 36 25" />
 		<meta name="twitter:image" content="https://pizzasatodogas.com/logo-meta.webp" />
 		<meta name="twitter:image:alt" content="Logo Pizzas A Todo Gas" />
 		
-		<!-- Datos de negocio local (Schema.org JSON-LD) -->
 		<script type="application/ld+json" set:html={JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "Restaurant",
@@ -111,13 +107,13 @@ const { title } = Astro.props;
 		"currenciesAccepted": "EUR"
 		})} />
 		
-		<!-- Breadcrumb Schema -->
 		<script type="application/ld+json" set:html={JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{
-			"@type": "ListItem",
+			"@type": 
+"ListItem",
 			"position": 1,
 			"name": "Inicio",
 			"item": "https://pizzasatodogas.com"
@@ -125,29 +121,26 @@ const { title } = Astro.props;
 		]
 		})} />
 		
-		<!-- Favicon y Iconos -->
 		<link rel="icon" type="image/webp" href="/logo.webp" />
 		<link rel="apple-touch-icon" href="/logo-meta.webp" />
 		<link rel="shortcut icon" href="/logo.webp" />
 		
-		<!-- Preconnect a fuentes -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 		
-		<!-- Prefetch DNS para recursos externos -->
 		<link rel="dns-prefetch" href="https://fonts.googleapis.com">
 		<link rel="dns-prefetch" href="https://www.google-analytics.com">
 		<link rel="dns-prefetch" href="https://www.googletagmanager.com">
 		
-		<!-- Theme Color para navegadores móviles -->
 		<meta name="theme-color" content="#ffc107" />
 		<meta name="msapplication-TileColor" content="#ffc107" />
 		<meta name="msapplication-TileImage" content="/logo-meta.webp" />
 		
 	<script async src="https://www.googletagmanager.com/gtag/js?id=GTM-TMPM6LQF"></script>
 <script is:inline>
-  window.dataLayer = window.dataLayer || [];
+  window.dataLayer = window.dataLayer ||
+[];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -160,10 +153,9 @@ const { title } = Astro.props;
   });
 </script>
 				
-		<!-- Slot para meta tags adicionales de cada página -->
 		<slot name="head" />
 		
-		<ViewTransitions />
+		<ClientRouter />
 	</head>
     <body>
         <div class="app-layout">
@@ -172,7 +164,8 @@ const { title } = Astro.props;
             <main>
                 <slot />
             </main>
-            
+         
+    
             <Footer />
         </div>
 
@@ -190,7 +183,8 @@ const { title } = Astro.props;
     }
 
     main {
-        flex: 1; /* Ocupa todo el espacio disponible empujando el footer */
+        flex: 1;
+        /* Ocupa todo el espacio disponible empujando el footer */
         display: flex;
         flex-direction: column;
         width: 100%;
