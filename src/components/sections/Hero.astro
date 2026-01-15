@@ -149,42 +149,43 @@ const { pizza } = Astro.props;
     50% { transform: translateY(-10px); }
   }
 
-  /* --- RESPONSIVE MÓVIL (COMPACTO) --- */
+  /* --- RESPONSIVE MÓVIL (CORREGIDO CORTE) --- */
   @media (max-width: 968px) {
     .hero-section {
-      padding-top: 75px; /* Reducimos padding superior */
-      padding-bottom: 20px;
-      /* Forzamos que la altura sea la de la pantalla para intentar que quepa todo */
-      height: 100dvh; 
-      min-height: 600px; /* Seguridad para móviles muy pequeños */
+      padding-top: 75px; 
+      /* CORRECCIÓN: Padding extra abajo para evitar el corte */
+      padding-bottom: 40px; 
+      /* CORRECCIÓN: height auto + min-height permite crecer si no cabe */
+      height: auto; 
+      min-height: 100dvh; 
       align-items: flex-start;
     }
 
     .hero-container { 
       display: flex;
       flex-direction: column;
-      /* Justify space-between reparte el espacio disponible entre Texto, Pizza y Botones */
       justify-content: space-between; 
       align-items: center;
       text-align: center;
-      height: 100%;
+      height: auto; /* Permitimos que el contenedor crezca */
       width: 100%;
+      min-height: 100%;
     }
 
-    /* 1. TEXTO ARRIBA (Compacto) */
+    /* 1. TEXTO ARRIBA */
     .hero-content {
       padding-right: 0;
       width: 100%;
-      display: contents; /* Para poder mover el CTA abajo independientemente */
+      display: contents; 
     }
 
     .text-group {
-        order: 1; /* Primero el texto */
+        order: 1;
         margin-bottom: 0;
     }
 
     .hero-title {
-        font-size: clamp(2.5rem, 8vw, 3.5rem); /* Un pelín más pequeño para que quepa */
+        font-size: clamp(2.5rem, 8vw, 3.5rem); 
         margin-bottom: 5px;
         line-height: 1;
     }
@@ -192,35 +193,36 @@ const { pizza } = Astro.props;
     
     .hero-subtitle {
         font-size: 0.95rem;
-        margin-bottom: 5px; /* Reducido al mínimo */
+        margin-bottom: 5px;
         max-width: 90%;
         margin-left: auto; margin-right: auto;
     }
 
-    /* 2. PIZZA EN MEDIO (Ajustada) */
+    /* 2. PIZZA EN MEDIO */
     .hero-image {
         order: 2;
         width: 100%;
         height: auto;
-        /* Márgenes negativos para juntarla con el texto y los botones */
-        margin-top: -10px; 
-        margin-bottom: -10px;
-        flex-grow: 1; /* Que ocupe el espacio sobrante */
+        /* Márgenes ajustados para juntar pero no pisar */
+        margin-top: 0; 
+        margin-bottom: 15px; 
+        flex-grow: 0; /* Quitamos flex-grow para no forzar espacios raros */
         display: flex;
         align-items: center;
+        min-height: 300px; /* Asegura un mínimo visual */
     }
     
     .pizza-img { 
         width: auto;
-        /* CLAVE: Máximo 45% de la altura de pantalla para asegurar que cabe */
-        max-height: 45vh; 
+        /* Limita altura para que no empuje todo fuera */
+        max-height: 40vh; 
         max-width: 95%;
         object-fit: contain;
     }
 
     .floating-badge {
         width: 60px; height: 60px; font-size: 0.65rem;
-        bottom: 10px; right: 0; left: auto;
+        bottom: 0; right: 0; left: auto;
     }
 
     /* 3. BOTONES ABAJO */
@@ -230,7 +232,9 @@ const { pizza } = Astro.props;
       gap: 15px;
       justify-content: flex-end;
       width: 100%;
-      margin-bottom: 10px;
+      /* Eliminamos margen negativo peligroso */
+      margin-bottom: 10px; 
+      padding-bottom: 10px; /* Extra seguridad */
     }
 
     .doodle-pepper { display: none; }
