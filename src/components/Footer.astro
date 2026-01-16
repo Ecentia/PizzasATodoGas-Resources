@@ -1,7 +1,7 @@
 ---
 // src/components/Footer.astro
 const currentYear = new Date().getFullYear();
-const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo+Gas+El+Saucejo";
+const mapLink = "https://www.google.com/maps/search/Pizzas+A+Todo+Gas+El+Saucejo";
 ---
 
 <footer class="site-footer">
@@ -197,7 +197,8 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
     transition: color 0.3s;
   }
   
-  .nav-links a:hover { color: #fff; }
+  .nav-links a:hover { color: #fff;
+  }
 
   /* HORARIO */
   .hours-list {
@@ -285,7 +286,8 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
     transition: color 0.3s;
   }
   
-  .ecentia-logo:hover { color: var(--color-accent, #ffc107); }
+  .ecentia-logo:hover { color: var(--color-accent, #ffc107);
+  }
 
   /* --- RESPONSIVE OPTIMIZADO --- */
   @media (max-width: 900px) {
@@ -294,9 +296,11 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
     }
 
     .footer-grid {
-      grid-template-columns: 1fr; /* Una sola columna */
+      grid-template-columns: 1fr;
+      /* Una sola columna */
       gap: 50px;
-      text-align: center; /* Todo centrado para móvil */
+      text-align: center;
+      /* Todo centrado para móvil */
     }
     
     /* Branding Centrado */
@@ -338,7 +342,8 @@ const mapLink = "https://www.google.com/maps/search/?api=1&query=Pizzeria+A+Todo
     }
     
     .legal-links a:hover {
-        padding-left: 0; /* Quitar efecto lateral en móvil */
+        padding-left: 0;
+        /* Quitar efecto lateral en móvil */
         color: var(--color-accent);
     }
     
