@@ -1,7 +1,7 @@
 ---
 // src/pages/pizzas/[id].astro
-import Layout from '../../layouts/Layout.astro';
-import { pizzas } from '../../data/pizzas';
+import Layout from "../../layouts/Layout.astro";
+import { pizzas } from "../../data/montaditos";
 
 export async function getStaticPaths() {
   return pizzas.map((pizza) => ({
@@ -17,17 +17,17 @@ const phoneNumber = "+34654843625";
 <Layout title={`${pizza.name} | Pizzas A Todo Gas`}>
   <div class="product-page">
     <div class="background-glow"></div>
-    
+
     <div class="container product-layout">
       <div class="image-section">
         <a href="/carta" class="back-link">← Volver a la Carta</a>
         <div class="pizza-stage">
           <div class="glow-effect"></div>
-          <img 
-            src={pizza.image} 
-            alt={`Pizza ${pizza.name}`} 
+          <img
+            src={pizza.image}
+            alt={`Pizza ${pizza.name}`}
             class="hero-pizza"
-            transition:name={`pizza-${pizza.id}`} 
+            transition:name={`pizza-${pizza.id}`}
           />
           {pizza.tag && <span class="floating-badge">{pizza.tag}</span>}
         </div>
@@ -38,9 +38,9 @@ const phoneNumber = "+34654843625";
           <span class="price-tag">{pizza.price}</span>
           <h1 class="product-title">{pizza.name}</h1>
           <div class="separator"></div>
-          
+
           <p class="description">{pizza.description}</p>
-          
+
           <div class="ingredients-box">
             <span class="box-title">INGREDIENTES</span>
             <p>{pizza.ingredients}</p>
@@ -49,11 +49,26 @@ const phoneNumber = "+34654843625";
           <a href={`tel:${phoneNumber}`} class="cta-button">
             <span>PEDIR AHORA</span>
             <div class="icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                ></path></svg
+              >
             </div>
           </a>
-          
-          <p class="disclaimer">* Masa fresca elaborada a diario en nuestro local.</p>
+
+          <p class="disclaimer">
+            * Masa fresca elaborada a diario en nuestro local.
+          </p>
         </div>
       </div>
     </div>
@@ -64,7 +79,7 @@ const phoneNumber = "+34654843625";
   .product-page {
     min-height: 100vh;
     /* CORRECCIÓN: Aumentado a 180px porque tu header mide unos 150px en PC */
-    padding-top: 180px; 
+    padding-top: 180px;
     position: relative;
     overflow-x: hidden;
     background: radial-gradient(circle at 50% 10%, #1f1f1f 0%, #050505 100%);
@@ -72,8 +87,15 @@ const phoneNumber = "+34654843625";
 
   .background-glow {
     position: absolute;
-    top: 0; right: 0; width: 60%; height: 80%;
-    background: radial-gradient(circle, rgba(255, 193, 7, 0.05) 0%, transparent 70%);
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 80%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 193, 7, 0.05) 0%,
+      transparent 70%
+    );
     pointer-events: none;
     z-index: 0;
   }
@@ -84,7 +106,7 @@ const phoneNumber = "+34654843625";
     gap: 4rem;
     align-items: center;
     /* Ajuste para que ocupe la altura restante correctamente */
-    min-height: calc(100vh - 200px); 
+    min-height: calc(100vh - 200px);
     position: relative;
     z-index: 1;
     padding-bottom: 50px;
@@ -109,10 +131,12 @@ const phoneNumber = "+34654843625";
     font-size: 0.9rem;
     letter-spacing: 1px;
     /* Aseguramos que el botón de volver sea clicable y visible */
-    position: relative; 
+    position: relative;
     z-index: 10;
   }
-  .back-link:hover { color: var(--color-accent); }
+  .back-link:hover {
+    color: var(--color-accent);
+  }
 
   .pizza-stage {
     position: relative;
@@ -128,7 +152,11 @@ const phoneNumber = "+34654843625";
     position: absolute;
     width: 120%;
     height: 120%;
-    background: radial-gradient(circle, rgba(255,193,7,0.15) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(255, 193, 7, 0.15) 0%,
+      transparent 70%
+    );
     animation: pulse 4s infinite alternate;
   }
 
@@ -136,15 +164,18 @@ const phoneNumber = "+34654843625";
     width: 100%;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 30px 50px rgba(0,0,0,0.6));
-    animation: spin-entrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, float 6s ease-in-out infinite 1.5s;
+    filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
+    animation:
+      spin-entrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+      float 6s ease-in-out infinite 1.5s;
     transform: scale(0.5) rotate(-20deg);
     opacity: 0;
   }
 
   .floating-badge {
     position: absolute;
-    top: 0; right: 0;
+    top: 0;
+    right: 0;
     background: var(--color-accent);
     color: #000;
     padding: 10px 20px;
@@ -152,7 +183,7 @@ const phoneNumber = "+34654843625";
     font-weight: 800;
     text-transform: uppercase;
     font-family: var(--font-heading);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards;
     opacity: 0;
     transform: scale(0);
@@ -183,7 +214,8 @@ const phoneNumber = "+34654843625";
   }
 
   .separator {
-    width: 80px; height: 6px;
+    width: 80px;
+    height: 6px;
     background: var(--color-accent);
     border-radius: 3px;
     margin-bottom: 30px;
@@ -244,17 +276,31 @@ const phoneNumber = "+34654843625";
 
   /* --- ANIMACIONES --- */
   @keyframes spin-entrance {
-    to { transform: scale(1) rotate(0deg); opacity: 1; }
+    to {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
   }
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
   }
   @keyframes pop-in {
-    to { transform: scale(1); opacity: 1; }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
   @keyframes slide-up {
-    to { transform: translateY(0); opacity: 1; }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   /* --- RESPONSIVE --- */
@@ -269,20 +315,37 @@ const phoneNumber = "+34654843625";
       gap: 2rem;
       text-align: center;
     }
-    
-    .image-section { order: 1; }
-    .info-section { order: 2; }
-    
-    .back-link { align-self: center; }
-    .pizza-stage { max-width: 350px; margin: 0 auto; }
-    
-    .content-wrapper { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
+
+    .image-section {
+      order: 1;
     }
-    .separator { margin: 0 auto 30px auto; }
-    .ingredients-box { text-align: left; max-width: 400px; margin: 0 auto 40px auto; }
-    .product-title { font-size: 3rem; }
+    .info-section {
+      order: 2;
+    }
+
+    .back-link {
+      align-self: center;
+    }
+    .pizza-stage {
+      max-width: 350px;
+      margin: 0 auto;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .separator {
+      margin: 0 auto 30px auto;
+    }
+    .ingredients-box {
+      text-align: left;
+      max-width: 400px;
+      margin: 0 auto 40px auto;
+    }
+    .product-title {
+      font-size: 3rem;
+    }
   }
 </style>
