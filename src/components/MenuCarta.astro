@@ -2,9 +2,9 @@
 /* src/components/MenuCarta.astro */
 import { menuCompleto } from "../data/index";
 
-/* 1. AGRUPAMOS LOS PRODUCTOS POR CATEGORÍA 
-   Esto nos permite crear secciones separadas en lugar de una lista mezclada.
-*/
+/* --- LÓGICA DE DATOS --- */
+
+// 1. Agrupar productos
 const itemsByCategory = menuCompleto.reduce(
   (acc, item) => {
     const cat = item.category;
@@ -17,10 +17,7 @@ const itemsByCategory = menuCompleto.reduce(
   {} as Record<string, typeof menuCompleto>,
 );
 
-/* 2. ORDEN DE APARICIÓN 
-   Definimos qué categorías salen primero para que lo más importante (Pizzas/Burgers) 
-   esté arriba del todo al deslizar.
-*/
+// 2. Definir prioridad de categorías (Lo más vendido primero)
 const categoryPriority = [
   "Pizzas",
   "Hamburguesas",
@@ -32,71 +29,98 @@ const categoryPriority = [
   "Sandwiches",
 ];
 
+// 3. Ordenar las categorías
 const sortedCategories = Object.keys(itemsByCategory).sort((a, b) => {
   const indexA = categoryPriority.indexOf(a);
   const indexB = categoryPriority.indexOf(b);
-  // Si ambos están en la lista de prioridad, ordenar según ella
   if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-  // Si solo uno está, ese va primero
   if (indexA !== -1) return -1;
   if (indexB !== -1) return 1;
-  // Si ninguno está, orden alfabético
   return a.localeCompare(b);
 });
+
+// Lista de filtros (incluyendo "Todos" al principio)
+const filterCategories = ["Todos", ...sortedCategories];
 ---
 
 <section id="carta-completa" class="menu-section">
-  <div class="container">
+  <div class="container" style="margin-top: 55px;">
     <div class="section-header">
-      <span class="subtitle">Nuestra Carta</span>
       <h2 class="title">
-        Sabores <span class="text-accent">Auténticos</span>
+        ¿Qué te <span class="text-accent">apetece?</span>
       </h2>
-      <p class="description">
-        Desliza hacia abajo para descubrir todas nuestras especialidades.
-      </p>
+      <p class="description">Pulsa una categoría para ir directo a ella.</p>
+    </div>
+
+    <div class="filters-wrapper" id="filters-anchor">
+      <nav class="filters-nav">
+        <ul class="filters-list">
+          {
+            filterCategories.map((cat, index) => (
+              <li>
+                <button
+                  class={`filter-btn ${index === 0 ? "active" : ""}`}
+                  data-category={cat}
+                >
+                  {cat}
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
     </div>
 
     <div class="menu-flow">
       {
         sortedCategories.map((category) => (
-          <div class="category-section">
-            {/* Título de la Sección (Sticky para que se vea siempre qué ves) */}
-            <div class="category-header">
+          /* Secciones con ID para navegación suave */
+          <div
+            class="category-section"
+            id={`sec-${category}`}
+            data-category={category}
+          >
+            {/* Título de Sección Sticky (Se queda pegado un poco para dar contexto) */}
+            <div class="category-header sticky-header">
               <h3 class="category-title">{category}</h3>
               <div class="category-line" />
             </div>
 
-            {/* BANNER 3x2: Solo lo mostramos antes de la sección PIZZAS */}
+            {/* BANNER 3x2 (Solo en PIZZAS) */}
             {category === "Pizzas" && (
               <div class="promo-banner">
                 <div class="promo-content">
-                  <div class="promo-badge-wrapper">
-                    <span class="promo-badge">¡OFERTA LUNES!</span>
+                  <span class="promo-badge">¡OFERTA LUNES!</span>
+                  <div class="promo-text-group">
+                    <h4 class="promo-title">3x2 EN TODAS LAS PIZZAS</h4>
+                    <p class="promo-conditions">
+                      ** Excepto Julio, Agosto y festivos
+                    </p>
                   </div>
-                  <h4 class="promo-title">3x2 EN TODAS LAS PIZZAS</h4>
-                  <p class="promo-conditions">
-                    ** Excepto Julio, Agosto y festivos
-                  </p>
                 </div>
               </div>
             )}
 
-            {/* GRID DE PRODUCTOS DE ESTA CATEGORÍA */}
+            {/* GRID DE PLATOS (Mobile Proof) */}
             <div class="menu-grid">
               {itemsByCategory[category].map((item, index) => (
                 <article class="menu-item">
-                  <div class="item-header">
-                    <h4 class="item-name">
-                      {/* Numeración reiniciada por categoría (index + 1) */}
-                      <span class="item-number">{index + 1}.</span> {item.name}
-                    </h4>
-                    <div class="item-separator" />
-                    <span class="item-price">{item.price.toFixed(2)}€</span>
+                  {/* Estructura GRID: Nombre | Puntos | Precio */}
+                  <div class="item-header-grid">
+                    <div class="item-info-col">
+                      <h4 class="item-name">
+                        <span class="item-number">{index + 1}.</span>{" "}
+                        {item.name}
+                      </h4>
+                    </div>
+                    <div class="item-dots-col" />{" "}
+                    <div class="item-price-col">
+                      <span class="item-price">{item.price.toFixed(2)}€</span>
+                    </div>
                   </div>
 
+                  {/* Descripción: Ocupa todo el ancho abajo */}
                   <div class="item-details">
-                    {/* Prioridad a la descripción (ingredientes) */}
                     {item.description && (
                       <p class="item-description">{item.description}</p>
                     )}
@@ -108,157 +132,240 @@ const sortedCategories = Object.keys(itemsByCategory).sort((a, b) => {
         ))
       }
     </div>
+
+    <button
+      id="back-to-filters"
+      class="floating-btn hidden"
+      aria-label="Volver a los filtros"
+    >
+      ↑ Filtros
+    </button>
+
+    <div id="no-results" class="hidden no-results-msg">
+      <p>Selecciona otra categoría.</p>
+    </div>
   </div>
 </section>
 
+<script>
+  /* --- LÓGICA DE INTERACCIÓN --- */
+  document.addEventListener("astro:page-load", initMenu);
+  document.addEventListener("DOMContentLoaded", initMenu);
+
+  function initMenu() {
+    const buttons = document.querySelectorAll(".filter-btn");
+    const sections = document.querySelectorAll(".category-section");
+    const backBtn = document.getElementById("back-to-filters");
+    const filtersAnchor = document.getElementById("filters-anchor");
+
+    /* 1. FILTRADO / NAVEGACIÓN */
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        const category = target.dataset.category;
+
+        // Gestión visual de botones
+        buttons.forEach((b) => b.classList.remove("active"));
+        target.classList.add("active");
+
+        // Lógica:
+        // Si es "Todos" -> Mostramos todo.
+        // Si es una categoría -> Ocultamos las demás para que el usuario no tenga que hacer scroll infinito.
+
+        if (category === "Todos") {
+          sections.forEach((s) => s.classList.remove("hidden"));
+        } else {
+          sections.forEach((s) => {
+            const secEl = s as HTMLElement;
+            if (secEl.dataset.category === category) {
+              secEl.classList.remove("hidden");
+              // Scroll suave hacia la sección seleccionada
+              // Pequeño timeout para dar tiempo al navegador a renderizar
+              setTimeout(() => {
+                const yOffset = -80; // Ajuste para el sticky header
+                const y =
+                  secEl.getBoundingClientRect().top +
+                  window.pageYOffset +
+                  yOffset;
+                window.scrollTo({ top: y, behavior: "smooth" });
+              }, 10);
+            } else {
+              secEl.classList.add("hidden");
+            }
+          });
+        }
+      });
+    });
+
+    /* 2. BOTÓN FLOTANTE (Back to Top) */
+    if (backBtn && filtersAnchor) {
+      window.addEventListener("scroll", () => {
+        const filtersPosition = filtersAnchor.getBoundingClientRect().bottom;
+        // Si los filtros ya no se ven (están arriba), mostramos el botón
+        if (filtersPosition < 0) {
+          backBtn.classList.remove("hidden");
+          backBtn.classList.add("visible");
+        } else {
+          backBtn.classList.remove("visible");
+          backBtn.classList.add("hidden");
+        }
+      });
+
+      backBtn.addEventListener("click", () => {
+        // Volver arriba suavemente
+        filtersAnchor.scrollIntoView({ behavior: "smooth", block: "start" });
+        // Opcional: Resetear a "Todos" si quieres, pero mejor dejar la selección actual
+      });
+    }
+  }
+</script>
+
 <style>
-  /* --- LAYOUT GENERAL --- */
+  /* --- VARIABLES & LAYOUT --- */
   .menu-section {
-    padding: 4rem 0 6rem;
+    padding: 2rem 0 6rem;
     position: relative;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
   }
 
   .section-header {
     text-align: center;
-    margin-bottom: 4rem;
-    max-width: 800px;
-    margin-inline: auto;
-    padding: 0 15px;
-  }
-
-  .subtitle {
-    font-family: var(--font-heading);
-    color: var(--color-accent);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
   }
 
   .title {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     color: var(--color-text-main);
-    margin-bottom: 1rem;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     line-height: 1.1;
+    margin-bottom: 0.5rem;
   }
 
   .text-accent {
     color: transparent;
     -webkit-text-stroke: 1px var(--color-accent);
-    position: relative;
   }
 
   .description {
-    font-size: 1.1rem;
     color: var(--color-stone-grey);
-    font-weight: 300;
+    font-size: 1rem;
   }
 
-  /* --- SECCIONES DE CATEGORÍA --- */
+  /* --- FILTROS: EL CAMBIO CLAVE MÓVIL --- */
+  .filters-wrapper {
+    margin-bottom: 3rem;
+    /* En desktop puede ser sticky, en móvil NO para no comer pantalla */
+    position: relative;
+    z-index: 50;
+  }
+
+  .filters-nav {
+    width: 100%;
+  }
+
+  .filters-list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* ESTILO BOTÓN BASE */
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-stone-grey);
+    padding: 10px 20px;
+    border-radius: 8px; /* Más cuadrado = más fácil de pulsar en rejilla */
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%; /* Para llenar hueco en grid móvil */
+  }
+
+  .filter-btn.active {
+    background: var(--color-accent);
+    color: #000;
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* --- SECCIONES --- */
+  .category-section.hidden {
+    display: none;
+  }
+
   .category-section {
-    margin-bottom: 5rem; /* Espacio generoso entre bloques */
+    margin-bottom: 4rem;
+    scroll-margin-top: 100px; /* Margen para el scroll automático */
   }
 
-  .category-header {
+  /* HEADER DE CATEGORÍA STICKY */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 40;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 2.5rem;
-    /* Efecto Sticky opcional: Mantiene el título visible mientras scrolleas la sección */
-    position: sticky;
-    top: 10px; /* Ajustar según la altura de tu navbar si tienes */
-    z-index: 10;
-    background: rgba(10, 10, 10, 0.95); /* Fondo oscuro semitransparente */
-    padding: 10px 0;
-    backdrop-filter: blur(5px);
-    border-radius: 0 0 10px 10px;
+    gap: 15px;
+    margin-bottom: 1.5rem;
   }
 
   .category-title {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--color-accent);
     text-transform: uppercase;
     margin: 0;
     white-space: nowrap;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .category-line {
+    flex-grow: 1;
     height: 1px;
     background: linear-gradient(
       90deg,
       var(--color-accent) 0%,
       transparent 100%
     );
-    width: 100%;
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
-  /* --- BANNER OFERTA (Contextual) --- */
-  .promo-banner {
-    background: radial-gradient(
-      circle at center,
-      rgba(255, 193, 7, 0.1) 0%,
-      rgba(0, 0, 0, 0) 80%
-    );
-    border: 1px solid rgba(255, 193, 7, 0.3);
-    border-radius: 12px;
-    margin-bottom: 2.5rem;
-    padding: 1.5rem;
-    text-align: center;
-    position: relative;
-  }
-
-  .promo-badge {
-    background: var(--color-accent);
-    color: #000;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    display: inline-block;
-  }
-
-  .promo-title {
-    font-family: var(--font-heading);
-    font-size: 1.8rem;
-    color: var(--color-text-main);
-    margin: 0.8rem 0 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .promo-conditions {
-    color: var(--color-stone-grey);
-    font-size: 0.9rem;
-    font-style: italic;
-    margin: 0;
-    opacity: 0.8;
-  }
-
-  /* --- GRID DE ITEMS --- */
+  /* --- GRID DE PLATOS: LA SOLUCIÓN AL CORTE --- */
   .menu-grid {
     display: grid;
-    /* Responsive: 1 columna móvil, 2 columnas escritorio */
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 2.5rem;
-    row-gap: 3rem;
+    gap: 2rem;
+    /* Desktop: 2 columnas */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .menu-item {
-    break-inside: avoid; /* Evita que un plato se corte al imprimir o en layout complejos */
+    background: transparent;
   }
 
-  .item-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 0.4rem;
+  /* GRID INTERNO DEL PLATO: Anti-Rotura */
+  .item-header-grid {
+    display: grid;
+    /* Col 1 (Nombre): 1fr (ocupa todo lo libre)
+       Col 2 (Puntos): auto (se adapta)
+       Col 3 (Precio): max-content (no se aplasta nunca)
+    */
+    grid-template-columns: 1fr auto max-content;
+    align-items: end; /* Alinear precio abajo */
+    gap: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.2rem;
   }
 
   .item-name {
@@ -266,24 +373,22 @@ const sortedCategories = Object.keys(itemsByCategory).sort((a, b) => {
     font-size: 1.25rem;
     color: var(--color-text-main);
     margin: 0;
+    line-height: 1.2;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
 
   .item-number {
-    color: var(--color-accent); /* Color dorado para el número */
+    color: var(--color-accent);
     font-weight: 700;
     margin-right: 4px;
-    font-size: 1.25rem;
   }
 
-  .item-separator {
-    flex-grow: 1;
-    border-bottom: 2px dotted rgba(255, 255, 255, 0.15);
-    margin: 0 0.8rem;
-    position: relative;
-    top: -5px;
+  .item-dots-col {
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.2);
+    height: 100%;
+    min-width: 20px;
+    margin-bottom: 6px; /* Ajuste visual */
   }
 
   .item-price {
@@ -291,47 +396,118 @@ const sortedCategories = Object.keys(itemsByCategory).sort((a, b) => {
     font-size: 1.25rem;
     color: var(--color-accent);
     font-weight: 700;
-  }
-
-  .item-details {
-    padding-left: 0;
+    white-space: nowrap; /* PRECIO SIEMPRE EN UNA LÍNEA */
   }
 
   .item-description {
     color: var(--color-stone-grey);
     font-size: 0.95rem;
     line-height: 1.4;
-    margin: 0;
-    font-weight: 300;
+    margin-top: 0.2rem;
     font-style: italic;
-    opacity: 0.9;
-    max-width: 90%;
   }
 
-  /* --- RESPONSIVE --- */
+  /* --- BANNER OFERTA --- */
+  .promo-banner {
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 193, 7, 0.15) 0%,
+      rgba(0, 0, 0, 0) 80%
+    );
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .promo-badge {
+    background: var(--color-accent);
+    color: #000;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  .promo-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    margin: 0;
+    color: var(--color-text-main);
+  }
+  .promo-conditions {
+    font-size: 0.8rem;
+    font-style: italic;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  /* --- BOTÓN FLOTANTE --- */
+  .floating-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--color-accent);
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+  .floating-btn.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* --- RESPONSIVE / MÓVIL --- */
   @media (max-width: 768px) {
+    /* 1. FILTROS EN "CLOUD" (WRAP) PARA QUE SE VEAN TODOS */
+    .filters-list {
+      flex-wrap: wrap; /* CLAVE: Si no caben, bajan de línea */
+    }
+
+    .filter-btn {
+      padding: 12px 10px; /* Botones más altos para dedo */
+      font-size: 0.85rem;
+      flex-grow: 1; /* Ocupan el ancho disponible */
+      text-align: center;
+    }
+
+    /* 2. GRID ITEMS EN UNA COLUMNA */
     .menu-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
     }
 
-    .item-separator {
-      display: none; /* En móvil limpio, sin línea punteada */
+    /* 3. AJUSTE DE LA FICHA DEL PLATO */
+    .item-header-grid {
+      grid-template-columns: 1fr max-content; /* Quitamos la columna de puntos */
+      gap: 15px; /* Espacio seguro entre texto y precio */
+      align-items: start; /* Alineamos arriba */
     }
 
-    .item-header {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 0.2rem;
+    .item-dots-col {
+      display: none;
+    } /* Adios línea punteada */
+
+    .item-name {
+      font-size: 1.15rem; /* Un pelín más pequeño para que quepa más */
     }
 
     .item-price {
-      align-self: flex-end;
-      margin-top: -1.5rem; /* Alineación inteligente del precio */
+      font-size: 1.2rem;
+      align-self: flex-start; /* Precio arriba a la derecha */
     }
 
-    .category-header {
-      top: 0; /* Asegurar sticky en el borde superior en móvil */
+    .sticky-header {
+      top: -1px; /* Hack para evitar huecos */
+      padding: 10px 0;
     }
 
     .category-title {
