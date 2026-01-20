@@ -1,5 +1,4 @@
-import { MenuItem } from "./montaditos";
-
+import type { MenuItem } from "./bocatas";
 export const pizzas: MenuItem[] = [
   {
     id: 'pizza-margarita',

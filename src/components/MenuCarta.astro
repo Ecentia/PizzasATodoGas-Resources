@@ -4,7 +4,6 @@ import { menuCompleto } from "../data/index";
 
 /* --- LÓGICA DE DATOS --- */
 
-// 1. Agrupar productos
 const itemsByCategory = menuCompleto.reduce(
   (acc, item) => {
     const cat = item.category;
@@ -17,19 +16,15 @@ const itemsByCategory = menuCompleto.reduce(
   {} as Record<string, typeof menuCompleto>,
 );
 
-// 2. Definir prioridad de categorías (Lo más vendido primero)
 const categoryPriority = [
   "Pizzas",
   "Hamburguesas",
   "Kebab y Patatas",
   "Platos",
   "Tapas",
-  "Montaditos",
-  "Serranitos",
-  "Sandwiches",
+  "Bocatas",
 ];
 
-// 3. Ordenar las categorías
 const sortedCategories = Object.keys(itemsByCategory).sort((a, b) => {
   const indexA = categoryPriority.indexOf(a);
   const indexB = categoryPriority.indexOf(b);
@@ -39,7 +34,28 @@ const sortedCategories = Object.keys(itemsByCategory).sort((a, b) => {
   return a.localeCompare(b);
 });
 
-// Lista de filtros (incluyendo "Todos" al principio)
+const subcategoryOrder = ["Montaditos", "Sandwiches", "Serranitos", "Baguettes"];
+
+const getBocatasGrouped = () => {
+  const bocatas = itemsByCategory["Bocatas"] || [];
+  const grouped: Record<string, typeof menuCompleto> = {};
+
+  bocatas.forEach(item => {
+    const sub = item.subcategory || "Otros";
+    if (!grouped[sub]) grouped[sub] = [];
+    grouped[sub].push(item);
+  });
+
+  return Object.keys(grouped).sort((a, b) => {
+    const indexA = subcategoryOrder.indexOf(a);
+    const indexB = subcategoryOrder.indexOf(b);
+    return indexA - indexB;
+  }).map(sub => ({
+    name: sub,
+    items: grouped[sub]
+  }));
+};
+
 const filterCategories = ["Todos", ...sortedCategories];
 ---
 
@@ -74,117 +90,105 @@ const filterCategories = ["Todos", ...sortedCategories];
     <div class="menu-flow">
       {
         sortedCategories.map((category) => (
-          /* Secciones con ID para navegación suave */
           <div
             class="category-section"
             id={`sec-${category}`}
             data-category={category}
           >
-            {/* Título de Sección Sticky (Se queda pegado un poco para dar contexto) */}
             <div class="category-header sticky-header">
               <h3 class="category-title">{category}</h3>
               <div class="category-line" />
             </div>
 
-            {/* BANNER 3x2 (Solo en PIZZAS) */}
             {category === "Pizzas" && (
               <div class="promo-banner">
                 <div class="promo-content">
                   <span class="promo-badge">¡OFERTA LUNES!</span>
                   <div class="promo-text-group">
                     <h4 class="promo-title">3x2 EN TODAS LAS PIZZAS</h4>
-                    <p class="promo-conditions">
-                      ** Excepto Julio, Agosto y festivos
-                    </p>
+                    <p class="promo-conditions">** Excepto Julio, Agosto y festivos</p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* GRID DE PLATOS (Mobile Proof) */}
-            <div class="menu-grid">
-              {itemsByCategory[category].map((item, index) => (
-                <article class="menu-item">
-                  {/* Estructura GRID: Nombre | Puntos | Precio */}
-                  <div class="item-header-grid">
-                    <div class="item-info-col">
-                      <h4 class="item-name">
-                        <span class="item-number">{index + 1}.</span>{" "}
-                        {item.name}
-                      </h4>
-                    </div>
-                    <div class="item-dots-col" />{" "}
-                    <div class="item-price-col">
-                      <span class="item-price">{item.price.toFixed(2)}€</span>
-                    </div>
+            {category === "Bocatas" ? (
+              getBocatasGrouped().map((group) => (
+                <div class="subcategory-group">
+                  <div class="subcategory-header">
+                    <h4 class="subcategory-label">{group.name}</h4>
                   </div>
-
-                  {/* Descripción: Ocupa todo el ancho abajo */}
-                  <div class="item-details">
-                    {item.description && (
-                      <p class="item-description">{item.description}</p>
-                    )}
+                  
+                  <div class="menu-grid">
+                    {group.items.map((item, index) => (
+                      <article class="menu-item">
+                        <div class="item-header-grid">
+                          <div class="item-info-col">
+                            <h4 class="item-name">
+                              <span class="item-number">{index + 1}.</span> {item.name}
+                            </h4>
+                          </div>
+                          <div class="item-dots-col" />
+                          <div class="item-price-col">
+                            <span class="item-price">{item.price.toFixed(2)}€</span>
+                          </div>
+                        </div>
+                        <div class="item-details">
+                          {item.description && <p class="item-description">{item.description}</p>}
+                        </div>
+                      </article>
+                    ))}
                   </div>
-                </article>
-              ))}
-            </div>
+                </div>
+              ))
+            ) : (
+              <div class="menu-grid">
+                {itemsByCategory[category].map((item, index) => (
+                  <article class="menu-item">
+                    <div class="item-header-grid">
+                      <div class="item-info-col">
+                        <h4 class="item-name">
+                          <span class="item-number">{index + 1}.</span> {item.name}
+                        </h4>
+                      </div>
+                      <div class="item-dots-col" />
+                      <div class="item-price-col">
+                        <span class="item-price">{item.price.toFixed(2)}€</span>
+                      </div>
+                    </div>
+                    <div class="item-details">
+                      {item.description && <p class="item-description">{item.description}</p>}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         ))
       }
     </div>
 
-    <button
-      id="back-to-filters"
-      class="floating-btn hidden"
-      aria-label="Volver a los filtros"
-      style="display: inline-flex; align-items: center; gap: 8px;"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M12 19V5M5 12l7-7 7 7"></path>
-      </svg>
+    <button id="back-to-filters" class="floating-btn hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
       Filtros
     </button>
-
-    <div id="no-results" class="hidden no-results-msg">
-      <p>Selecciona otra categoría.</p>
-    </div>
   </div>
 </section>
 
 <script>
-  /* --- LÓGICA DE INTERACCIÓN --- */
   document.addEventListener("astro:page-load", initMenu);
-  document.addEventListener("DOMContentLoaded", initMenu);
-
   function initMenu() {
     const buttons = document.querySelectorAll(".filter-btn");
     const sections = document.querySelectorAll(".category-section");
     const backBtn = document.getElementById("back-to-filters");
     const filtersAnchor = document.getElementById("filters-anchor");
 
-    /* 1. FILTRADO / NAVEGACIÓN */
     buttons.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         const target = e.target as HTMLElement;
         const category = target.dataset.category;
-
-        // Gestión visual de botones
         buttons.forEach((b) => b.classList.remove("active"));
         target.classList.add("active");
-
-        // Lógica:
-        // Si es "Todos" -> Mostramos todo.
-        // Si es una categoría -> Ocultamos las demás para que el usuario no tenga que hacer scroll infinito.
 
         if (category === "Todos") {
           sections.forEach((s) => s.classList.remove("hidden"));
@@ -193,14 +197,9 @@ const filterCategories = ["Todos", ...sortedCategories];
             const secEl = s as HTMLElement;
             if (secEl.dataset.category === category) {
               secEl.classList.remove("hidden");
-              // Scroll suave hacia la sección seleccionada
-              // Pequeño timeout para dar tiempo al navegador a renderizar
               setTimeout(() => {
-                const yOffset = -80; // Ajuste para el sticky header
-                const y =
-                  secEl.getBoundingClientRect().top +
-                  window.pageYOffset +
-                  yOffset;
+                const yOffset = -80;
+                const y = secEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({ top: y, behavior: "smooth" });
               }, 10);
             } else {
@@ -211,321 +210,108 @@ const filterCategories = ["Todos", ...sortedCategories];
       });
     });
 
-    /* 2. BOTÓN FLOTANTE (Back to Top) */
     if (backBtn && filtersAnchor) {
       window.addEventListener("scroll", () => {
-        const filtersPosition = filtersAnchor.getBoundingClientRect().bottom;
-        // Si los filtros ya no se ven (están arriba), mostramos el botón
-        if (filtersPosition < 0) {
-          backBtn.classList.remove("hidden");
+        if (filtersAnchor.getBoundingClientRect().bottom < 0) {
           backBtn.classList.add("visible");
+          backBtn.classList.remove("hidden");
         } else {
-          backBtn.classList.remove("visible");
           backBtn.classList.add("hidden");
+          backBtn.classList.remove("visible");
         }
       });
-
       backBtn.addEventListener("click", () => {
-        // Volver arriba suavemente
         filtersAnchor.scrollIntoView({ behavior: "smooth", block: "start" });
-        // Opcional: Resetear a "Todos" si quieres, pero mejor dejar la selección actual
       });
     }
   }
 </script>
 
 <style>
-  /* --- VARIABLES & LAYOUT --- */
-  .menu-section {
-    padding: 2rem 0 6rem;
+  /* --- NUEVOS ESTILOS PARA DIFERENCIAR SUBCATEGORÍAS --- */
+  .subcategory-group {
+    margin-bottom: 5rem; /* Más espacio entre grupos (Montaditos vs Sandwiches) */
     position: relative;
   }
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .title {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    color: var(--color-text-main);
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
-  }
-
-  .text-accent {
-    color: transparent;
-    -webkit-text-stroke: 1px var(--color-accent);
-  }
-
-  .description {
-    color: var(--color-stone-grey);
-    font-size: 1rem;
-  }
-
-  /* --- FILTROS: EL CAMBIO CLAVE MÓVIL --- */
-  .filters-wrapper {
-    margin-bottom: 3rem;
-    /* En desktop puede ser sticky, en móvil NO para no comer pantalla */
+  .subcategory-header {
+    margin-bottom: 2.5rem;
     position: relative;
-    z-index: 50;
-  }
-
-  .filters-nav {
-    width: 100%;
-  }
-
-  .filters-list {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  /* ESTILO BOTÓN BASE */
-  .filter-btn {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--color-stone-grey);
-    padding: 10px 20px;
-    border-radius: 8px; /* Más cuadrado = más fácil de pulsar en rejilla */
-    font-family: var(--font-heading);
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 100%; /* Para llenar hueco en grid móvil */
-  }
-
-  .filter-btn.active {
-    background: var(--color-accent);
-    color: #000;
-    border-color: var(--color-accent);
-    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
-    transform: translateY(-2px);
-  }
-
-  /* --- SECCIONES --- */
-  .category-section.hidden {
-    display: none;
-  }
-
-  .category-section {
-    margin-bottom: 4rem;
-    scroll-margin-top: 100px; /* Margen para el scroll automático */
-  }
-
-  /* HEADER DE CATEGORÍA STICKY */
-  .sticky-header {
-    position: sticky;
-    top: 0;
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(8px);
-    z-index: 40;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 1.5rem;
   }
 
-  .category-title {
+  .subcategory-label {
     font-family: var(--font-heading);
-    font-size: 1.8rem;
-    color: var(--color-accent);
+    font-size: 1.8rem; /* Más grande para que destaque */
+    color: var(--color-accent); /* Color de la marca */
     text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 8px 20px;
+    background: linear-gradient(90deg, rgba(255, 193, 7, 0.15) 0%, transparent 100%);
+    border-left: 5px solid var(--color-accent);
     margin: 0;
-    white-space: nowrap;
-  }
-
-  .category-line {
-    flex-grow: 1;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      var(--color-accent) 0%,
-      transparent 100%
-    );
-    opacity: 0.4;
-  }
-
-  /* --- GRID DE PLATOS: LA SOLUCIÓN AL CORTE --- */
-  .menu-grid {
-    display: grid;
-    gap: 2rem;
-    /* Desktop: 2 columnas */
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .menu-item {
-    background: transparent;
-  }
-
-  /* GRID INTERNO DEL PLATO: Anti-Rotura */
-  .item-header-grid {
-    display: grid;
-    /* Col 1 (Nombre): 1fr (ocupa todo lo libre)
-       Col 2 (Puntos): auto (se adapta)
-       Col 3 (Precio): max-content (no se aplasta nunca)
-    */
-    grid-template-columns: 1fr auto max-content;
-    align-items: end; /* Alinear precio abajo */
-    gap: 0.5rem;
     width: 100%;
-    margin-bottom: 0.2rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
   }
 
-  .item-name {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    color: var(--color-text-main);
-    margin: 0;
-    line-height: 1.2;
-    font-weight: 500;
-    text-transform: uppercase;
+  /* --- ESTILOS BASE --- */
+  .menu-section { padding: 2rem 0 6rem; position: relative; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+  .section-header { text-align: center; margin-bottom: 2rem; }
+  .title { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--color-text-main); line-height: 1.1; margin-bottom: 0.5rem; }
+  .text-accent { color: transparent; -webkit-text-stroke: 1px var(--color-accent); }
+  .description { color: var(--color-stone-grey); font-size: 1rem; }
+  .filters-wrapper { margin-bottom: 3rem; position: relative; z-index: 50; }
+  .filters-list { display: flex; justify-content: center; gap: 10px; list-style: none; padding: 0; }
+  .filter-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--color-stone-grey); padding: 10px 20px; border-radius: 8px; font-family: var(--font-heading); text-transform: uppercase; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
+  .filter-btn.active { background: var(--color-accent); color: #000; border-color: var(--color-accent); box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3); transform: translateY(-2px); }
+  .category-section.hidden { display: none; }
+  .category-section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+  
+  /* Sticky Header de Categoría Principal */
+  .sticky-header { 
+    position: sticky; 
+    top: 0; 
+    background: rgba(10, 10, 10, 0.98); 
+    backdrop-filter: blur(8px); 
+    z-index: 40; 
+    padding: 20px 0; 
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1); 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    margin-bottom: 3rem; 
   }
+  
+  .category-title { font-family: var(--font-heading); font-size: 2.2rem; color: var(--color-text-main); text-transform: uppercase; margin: 0; white-space: nowrap; }
+  .category-line { flex-grow: 1; height: 1px; background: var(--color-accent); opacity: 0.3; }
 
-  .item-number {
-    color: var(--color-accent);
-    font-weight: 700;
-    margin-right: 4px;
-  }
+  .menu-grid { display: grid; gap: 2.5rem; grid-template-columns: repeat(2, 1fr); }
+  .item-header-grid { display: grid; grid-template-columns: 1fr auto max-content; align-items: end; gap: 0.5rem; width: 100%; margin-bottom: 0.2rem; }
+  .item-name { font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-text-main); margin: 0; line-height: 1.2; font-weight: 500; text-transform: uppercase; }
+  .item-number { color: var(--color-accent); font-weight: 700; margin-right: 4px; }
+  .item-dots-col { border-bottom: 2px dotted rgba(255, 255, 255, 0.2); height: 100%; min-width: 20px; margin-bottom: 6px; }
+  .item-price { font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-accent); font-weight: 700; white-space: nowrap; }
+  .item-description { color: var(--color-stone-grey); font-size: 0.95rem; line-height: 1.4; margin-top: 0.2rem; font-style: italic; }
 
-  .item-dots-col {
-    border-bottom: 2px dotted rgba(255, 255, 255, 0.2);
-    height: 100%;
-    min-width: 20px;
-    margin-bottom: 6px; /* Ajuste visual */
-  }
+  .promo-banner { background: radial-gradient(circle at center, rgba(255, 193, 7, 0.15) 0%, rgba(0, 0, 0, 0) 80%); border: 1px solid rgba(255, 193, 7, 0.3); border-radius: 12px; padding: 1.5rem; margin-bottom: 3rem; text-align: center; }
+  .promo-badge { background: var(--color-accent); color: #000; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; display: inline-block; margin-bottom: 0.5rem; }
+  .promo-title { font-family: var(--font-heading); font-size: 1.6rem; margin: 0; color: var(--color-text-main); }
 
-  .item-price {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    color: var(--color-accent);
-    font-weight: 700;
-    white-space: nowrap; /* PRECIO SIEMPRE EN UNA LÍNEA */
-  }
+  .floating-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--color-accent); color: #000; border: none; padding: 12px 28px; border-radius: 50px; font-family: var(--font-heading); font-weight: 700; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); z-index: 100; transition: all 0.3s ease; opacity: 0; display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; cursor: pointer; }
+  .floating-btn.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-  .item-description {
-    color: var(--color-stone-grey);
-    font-size: 0.95rem;
-    line-height: 1.4;
-    margin-top: 0.2rem;
-    font-style: italic;
-  }
-
-  /* --- BANNER OFERTA --- */
-  .promo-banner {
-    background: radial-gradient(
-      circle at center,
-      rgba(255, 193, 7, 0.15) 0%,
-      rgba(0, 0, 0, 0) 80%
-    );
-    border: 1px solid rgba(255, 193, 7, 0.3);
-    border-radius: 12px;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-  .promo-badge {
-    background: var(--color-accent);
-    color: #000;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-  }
-  .promo-title {
-    font-family: var(--font-heading);
-    font-size: 1.4rem;
-    margin: 0;
-    color: var(--color-text-main);
-  }
-  .promo-conditions {
-    font-size: 0.8rem;
-    font-style: italic;
-    opacity: 0.8;
-    margin: 0;
-  }
-
-  /* --- BOTÓN FLOTANTE --- */
-  .floating-btn {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--color-accent);
-    color: #000;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 50px;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-    z-index: 100;
-    transition: all 0.3s ease;
-    opacity: 0;
-  }
-  .floating-btn.visible {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-
-  /* --- RESPONSIVE / MÓVIL --- */
   @media (max-width: 768px) {
-    /* 1. FILTROS EN "CLOUD" (WRAP) PARA QUE SE VEAN TODOS */
-    .filters-list {
-      flex-wrap: wrap; /* CLAVE: Si no caben, bajan de línea */
-    }
-
-    .filter-btn {
-      padding: 12px 10px; /* Botones más altos para dedo */
-      font-size: 0.85rem;
-      flex-grow: 1; /* Ocupan el ancho disponible */
-      text-align: center;
-    }
-
-    /* 2. GRID ITEMS EN UNA COLUMNA */
-    .menu-grid {
-      grid-template-columns: 1fr;
-    }
-
-    /* 3. AJUSTE DE LA FICHA DEL PLATO */
-    .item-header-grid {
-      grid-template-columns: 1fr max-content; /* Quitamos la columna de puntos */
-      gap: 15px; /* Espacio seguro entre texto y precio */
-      align-items: start; /* Alineamos arriba */
-    }
-
-    .item-dots-col {
-      display: none;
-    } /* Adios línea punteada */
-
-    .item-name {
-      font-size: 1.15rem; /* Un pelín más pequeño para que quepa más */
-    }
-
-    .item-price {
-      font-size: 1.2rem;
-      align-self: flex-start; /* Precio arriba a la derecha */
-    }
-
-    .sticky-header {
-      top: -1px; /* Hack para evitar huecos */
-      padding: 10px 0;
-    }
-
-    .category-title {
-      font-size: 1.5rem;
-    }
+    .filters-list { flex-wrap: wrap; }
+    .filter-btn { padding: 12px 10px; font-size: 0.85rem; flex-grow: 1; text-align: center; }
+    .menu-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .item-header-grid { grid-template-columns: 1fr max-content; gap: 15px; align-items: start; }
+    .item-dots-col { display: none; }
+    .item-name { font-size: 1.15rem; }
+    .item-price { font-size: 1.2rem; align-self: flex-start; }
+    .sticky-header { top: -1px; padding: 15px 0; }
+    .category-title { font-size: 1.8rem; }
+    .subcategory-label { font-size: 1.4rem; padding: 6px 15px; }
   }
 </style>
