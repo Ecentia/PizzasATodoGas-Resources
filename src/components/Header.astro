@@ -70,7 +70,7 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <style>
-  /* --- LAYOUT HEADER --- */
+  /* --- LAYOUT HEADER BASE --- */
   .site-header {
     position: fixed;
     top: 0;
@@ -99,6 +99,8 @@ const currentPath = Astro.url.pathname;
     max-width: 1600px;
     margin: 0 auto;
     padding: 0 10px;
+    /* Evita que los hijos se encimen si el ancho es muy pequeño */
+    gap: 20px; 
   }
 
   /* --- BRAND --- */
@@ -107,7 +109,8 @@ const currentPath = Astro.url.pathname;
     align-items: center;
     gap: 15px;
     text-decoration: none;
-    flex-shrink: 0;
+    /* CRÍTICO: Evita que el logo se aplaste */
+    flex-shrink: 0; 
     z-index: 1002;
     position: relative;
   }
@@ -132,13 +135,20 @@ const currentPath = Astro.url.pathname;
     letter-spacing: 1px;
     text-transform: uppercase;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-    white-space: nowrap;
+    /* CRÍTICO: El texto nunca debe saltar de línea */
+    white-space: nowrap; 
   }
 
   /* --- NAV ESCRITORIO --- */
+  .main-nav {
+    /* Permitir encogerse si es necesario, pero preferimos ocultarlo via media query */
+    flex-shrink: 1; 
+  }
+
   .main-nav ul {
     display: flex;
-    gap: 40px;
+    /* Gap dinámico: se reduce si la pantalla se achica */
+    gap: clamp(20px, 3vw, 40px); 
     margin: 0;
     padding: 0;
     list-style: none;
@@ -154,6 +164,8 @@ const currentPath = Astro.url.pathname;
     letter-spacing: 1px;
     position: relative;
     transition: color 0.3s ease;
+    /* CRÍTICO: No permitir saltos de línea en los enlaces */
+    white-space: nowrap;
   }
 
   .main-nav a:hover, 
@@ -176,8 +188,8 @@ const currentPath = Astro.url.pathname;
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-shrink: 0;
+    gap: 15px;
+    flex-shrink: 0; /* Los botones no deben desaparecer ni aplastarse */
     z-index: 1002;
     position: relative;
   }
@@ -191,6 +203,7 @@ const currentPath = Astro.url.pathname;
     font-family: var(--font-heading);
     text-transform: uppercase;
     cursor: pointer;
+    white-space: nowrap; /* CRÍTICO */
   }
 
   .btn-call {
@@ -273,7 +286,7 @@ const currentPath = Astro.url.pathname;
     height: 100vh;
     background-color: var(--color-bg);
     z-index: 1001;
-    padding-top: 100px; /* Ajustado al nuevo tamaño de header */
+    padding-top: 100px;
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
     display: flex;
@@ -326,40 +339,72 @@ const currentPath = Astro.url.pathname;
     color: var(--color-accent);
   }
 
-  /* --- RESPONSIVE --- */
-  @media (max-width: 1200px) {
-    .brand-text { font-size: 1.4rem; }
-    .main-nav { display: none; }
-    .menu-grid-btn { display: block; }
+  /* --- GESTIÓN DE ESPACIO RESPONSIVE (CRÍTICO) --- */
+
+  /* 1. Etapa: Laptop Mediano (Ocultar texto marca) */
+  @media (max-width: 1450px) {
+    .brand-text {
+      display: none; /* Quitamos el texto grande del logo para dar aire al menú */
+    }
+    .logo-icon {
+      /* Mantenemos el logo icon visible pero ajustamos tamaño si es necesario */
+      width: 100px; 
+      height: 100px;
+    }
   }
 
-  @media (max-width: 768px) {
-    .site-header {
-        padding: 5px 0; /* Header más compacto en móvil */
+  /* 2. Etapa: Laptop Pequeño (Ocultar botón mapa) */
+  @media (max-width: 1200px) {
+    .btn-location {
+      display: none; /* Quitamos botón de mapa, dejamos solo Llamar */
     }
+  }
 
-    .header-container { width: 100%; padding: 0 15px; }
-    .brand-text { display: none; }
+  /* 3. Etapa: Tablet Horizontal / Híbrido (Cambio a Hamburguesa) */
+  /* Aquí es donde normalmente se rompe todo. Activamos hamburguesa ANTES de que choque */
+  @media (max-width: 1024px) {
+    .main-nav { 
+        display: none; /* Adiós menú texto */
+    }
+    .menu-grid-btn { 
+        display: block; /* Hola hamburguesa */
+    }
+    /* En este punto solo tenemos: Logo Icon + Botón Llamar + Hamburguesa */
+    .header-container {
+        justify-content: space-between;
+    }
+  }
+
+  /* 4. Etapa: Móvil Puro */
+  @media (max-width: 768px) {
+    .site-header { padding: 5px 0; }
+    .header-container { padding: 0 15px; }
     
     .logo-icon {
-        width: 60px; /* Reducido de 80px a 60px para que no se vea tan tosco */
-        height: 60px;
+        width: 70px;
+        height: 70px;
     }
 
-    .btn-location { display: none; }
-    
-    .btn-call { padding: 6px 12px; }
-    .btn-call .label { display: none; }
-    .btn-call .number { font-size: 0.95rem; }
-    
     .header-actions { gap: 10px; }
+
+    /* Botón llamar compacto */
+    .btn-call { padding: 8px 16px; }
+    .btn-call .label { display: none; }
+    .btn-call .number { font-size: 1rem; }
+  }
+
+  /* 5. Etapa: Móvil Mini (iPhone SE, Fold cerrado) */
+  @media (max-width: 380px) {
+    .btn-call .number { display: none; } /* Solo icono teléfono */
+    .btn-call { padding: 10px; border-radius: 50%; clip-path: none; }
+    .btn-call .icon-wrapper { background: none; padding: 0; }
   }
 </style>
 
 <script>
   const initHeader = () => {
     const header = document.querySelector('.site-header');
-    const scrollThreshold = 20; // Umbral bajo para activar rápido el fondo oscuro
+    const scrollThreshold = 20;
     
     if (header) {
       const handleScroll = () => {
