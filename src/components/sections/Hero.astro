@@ -110,9 +110,14 @@ const { pizza } = Astro.props;
 
     <div class="hero-image">
       <div class="circle-bg"></div>
-      <img src={pizza.src} alt={pizza.alt} class="pizza-img spin-slow" />
+      <img 
+        id="hero-pizza-img" 
+        src={pizza.src} 
+        alt={pizza.alt} 
+        class="pizza-img spin-slow" 
+      />
       <div class="floating-badge">
-        <span set:html={pizza.badge} />
+        <span id="hero-pizza-badge" set:html={pizza.badge} />
       </div>
     </div>
   </div>
@@ -292,9 +297,7 @@ const { pizza } = Astro.props;
   @media (max-width: 968px) {
     .hero-section {
       padding-top: 75px;
-      /* CORRECCIÓN: Padding extra abajo para evitar el corte */
       padding-bottom: 40px;
-      /* CORRECCIÓN: height auto + min-height permite crecer si no cabe */
       height: auto;
       min-height: 100dvh;
       align-items: flex-start;
@@ -306,12 +309,11 @@ const { pizza } = Astro.props;
       justify-content: space-between;
       align-items: center;
       text-align: center;
-      height: auto; /* Permitimos que el contenedor crezca */
+      height: auto;
       width: 100%;
       min-height: 100%;
     }
 
-    /* 1. TEXTO ARRIBA */
     .hero-content {
       padding-right: 0;
       width: 100%;
@@ -340,23 +342,20 @@ const { pizza } = Astro.props;
       margin-right: auto;
     }
 
-    /* 2. PIZZA EN MEDIO */
     .hero-image {
       order: 2;
       width: 100%;
       height: auto;
-      /* Márgenes ajustados para juntar pero no pisar */
       margin-top: 0;
       margin-bottom: 15px;
-      flex-grow: 0; /* Quitamos flex-grow para no forzar espacios raros */
+      flex-grow: 0;
       display: flex;
       align-items: center;
-      min-height: 300px; /* Asegura un mínimo visual */
+      min-height: 300px;
     }
 
     .pizza-img {
       width: auto;
-      /* Limita altura para que no empuje todo fuera */
       max-height: 40vh;
       max-width: 95%;
       object-fit: contain;
@@ -371,16 +370,14 @@ const { pizza } = Astro.props;
       left: auto;
     }
 
-    /* 3. BOTONES ABAJO */
     .hero-cta-wrapper {
       order: 3;
       flex-direction: column;
       gap: 15px;
       justify-content: flex-end;
       width: 100%;
-      /* Eliminamos margen negativo peligroso */
       margin-bottom: 10px;
-      padding-bottom: 10px; /* Extra seguridad */
+      padding-bottom: 10px;
     }
 
     .doodle-pepper {
@@ -388,3 +385,27 @@ const { pizza } = Astro.props;
     }
   }
 </style>
+
+<script>
+  // Lista de pizzas disponible para el Hero
+  const allPizzas = [
+    { src: '/pizzas/pizzakebab.webp', alt: 'Pizza Kebab Especial', badge: 'SABOR<br>ÚNICO' },
+    { src: '/pizzas/4quesos.webp', alt: 'Pizza 4 Quesos', badge: 'SUPER<br>CREMOSA' },
+    { src: '/pizzas/Barbacoa.webp', alt: 'Pizza Barbacoa', badge: 'TOP<br>VENTAS' },
+    { src: '/pizzas/champinonesYgambas.webp', alt: 'Champiñones y Gambas', badge: 'MAR Y<br>TIERRA' },
+    { src: '/pizzas/champinonesYjamonYork.webp', alt: 'Champiñones y York', badge: 'CLÁSICA<br>TOP' },
+    { src: '/pizzas/roquefortYjamonYork.webp', alt: 'Roquefort y York', badge: 'SABOR<br>FUERTE' }
+  ];
+
+  // Seleccionamos una aleatoria al cargar en el cliente
+  const randomPizza = allPizzas[Math.floor(Math.random() * allPizzas.length)];
+  
+  const img = document.getElementById('hero-pizza-img') as HTMLImageElement;
+  const badge = document.getElementById('hero-pizza-badge');
+
+  if (img && badge) {
+    img.src = randomPizza.src;
+    img.alt = randomPizza.alt;
+    badge.innerHTML = randomPizza.badge;
+  }
+</script>
