@@ -87,7 +87,7 @@ export const tapas: MenuItem[] = [
   },
   {
     id: 'tapa-croquetas-nueces-roquefort-3uds',
-    name: 'Croquetas de nueces y roquefort (3uds)',
+    name: 'Croquetas de gambas al ajillo (3uds)',
     price: 3.00,
     category: 'Tapas'
   },
